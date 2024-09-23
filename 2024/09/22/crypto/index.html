@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>crypto | Hexo</title>
+  <title>crypto | cly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="##RSA算法因数分解网站###e的值很小    import gmpy2    n &#x3D;    e &#x3D;    c &#x3D;    &#x2F;&#x2F;导入n，e，c的值    for i in range(10000):   &#x2F;&#x2F;遍历循环，找到m值        m, t &#x3D; gmpy2.iroot(i*n + c, e)        i">
+  <meta name="description" content="RSA算法因数分解网站   e的值很小12345678910import gmpy2n &#x3D; e &#x3D; c &#x3D; &#x2F;&#x2F;导入n，e，c的值for i in range(10000):   &#x2F;&#x2F;遍历循环，找到m值    m, t &#x3D; gmpy2.iroot(i*n + c, e)    if t:        print(bytearray.fromhex(format(m, &#x27;x&#x27;)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="crypto">
 <meta property="og:url" content="http://example.com/2024/09/22/crypto/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="##RSA算法因数分解网站###e的值很小    import gmpy2    n &#x3D;    e &#x3D;    c &#x3D;    &#x2F;&#x2F;导入n，e，c的值    for i in range(10000):   &#x2F;&#x2F;遍历循环，找到m值        m, t &#x3D; gmpy2.iroot(i*n + c, e)        i">
+<meta property="og:site_name" content="cly">
+<meta property="og:description" content="RSA算法因数分解网站   e的值很小12345678910import gmpy2n &#x3D; e &#x3D; c &#x3D; &#x2F;&#x2F;导入n，e，c的值for i in range(10000):   &#x2F;&#x2F;遍历循环，找到m值    m, t &#x3D; gmpy2.iroot(i*n + c, e)    if t:        print(bytearray.fromhex(format(m, &#x27;x&#x27;)">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-22T07:18:43.000Z">
-<meta property="article:modified_time" content="2024-09-22T08:17:16.037Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2024-09-23T01:08:14.370Z">
+<meta property="article:author" content="Liangyu Chen">
 <meta property="article:tag" content="ctf crypto">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="cly" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -44,7 +44,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">cly</a>
       </h1>
       
     </div>
@@ -94,472 +94,37 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>##RSA算法<br><a target="_blank" rel="noopener" href="http://factordb.com/">因数分解网站</a><br>###e的值很小<br>    import gmpy2<br>    n &#x3D;<br>    e &#x3D;<br>    c &#x3D;<br>    &#x2F;&#x2F;导入n，e，c的值<br>    for i in range(10000):   &#x2F;&#x2F;遍历循环，找到m值<br>        m, t &#x3D; gmpy2.iroot(i*n + c, e)<br>        if t:<br>            print(bytearray.fromhex(format(m, ‘x’)).decode()) &#x2F;&#x2F;将十六进制字符串转换为字节后解密<br>            break</p>
-<p>###两次加密存在一个相同的质数<br>    from Crypto.Util.number import *<br>    from gmpy2 import powmod as po, gmpy2<br>    import sympy<br>    c1 &#x3D;<br>    c2 &#x3D;<br>    n1 &#x3D;<br>    n2 &#x3D;<br>    e &#x3D;<br>    q &#x3D; gmpy2.gcd(n1, n2)  # 求n1和n2的最大公因数<br>    p1 &#x3D; n1 &#x2F;&#x2F; q<br>    p2 &#x3D; n2 &#x2F;&#x2F; q<br>    fn1 &#x3D; (q - 1) * (p1 - 1)  # 求下面的&amp;n<br>    fn2 &#x3D; (q - 1) * (p2 - 1)  # 求上面的&amp;n<br>    d1 &#x3D; inverse(e, fn1)  # (de)mod((p-1)*(q-1))&#x3D;1  求到第一个解密密钥d1<br>    d2 &#x3D; inverse(e, fn2)  # 求出第二个解密密钥d2<br>    m1 &#x3D; pow(c1, d1, n1)<br>    m2 &#x3D; pow(c2, d2, n2)<br>    print(long_to_bytes(m1))<br>    print(long_to_bytes(m2))</p>
-<p>###同一个n用两个e进行加密<br>    from gmpy2 import *<br>    from Crypto.Util.number import *<br>    from gmpy2 import gmpy2<br>    flag1 &#x3D;<br>    flag2 &#x3D;<br>    e1 &#x3D;<br>    e2 &#x3D;<br>    n &#x3D;<br>    def rsa_gong_N_def(e1, e2, c1, c2, n):<br>        e1, e2, c1, c2, n &#x3D; int(e1), int(e2), int(c1), int(c2), int(n)<br>        s &#x3D; gmpy2.gcdext(e1, e2)  # 扩展欧几里得算法  t<em>e1+z</em>e2&#x3D;1,求出t和z<br>        t &#x3D; s[1]<br>        z &#x3D; s[2]<br>        if t &lt; 0:  # 要求c的s次幂，就要先计算c的模反元素c2r，然后求c2r的-s2次幂<br>            t &#x3D; - t<br>            c1 &#x3D; gmpy2.invert(c1, n)  # 求c1的逆元<br>        elif z &lt; 0:<br>            z &#x3D; -z<br>            c2 &#x3D; gmpy2.invert(c2, n)<br>        m &#x3D; (pow(c1, t, n) * pow(c2, z, n)) % n  # (c1^s1*c2^s2)%n&#x3D;m%n&#x3D;m<br>        return m<br>    result &#x3D; rsa_gong_N_def(e1, e2, flag1, flag2, n)<br>    print(long_to_bytes(result))</p>
-<p>###有四个质数，其中两个是另外两个的next_prime，已知他们四个数的乘积<br>    import gmpy2<br>    from gmpy2 import *<br>    from Crypto.Util.number import *<br>    import sympy<br>    e &#x3D;<br>    n1 &#x3D;<br>    c1 &#x3D;<br>    def fermat_factorization(n):<br>        factor_list &#x3D; []<br>        get_context().precision &#x3D; 2048	<br>        sqrt_n &#x3D; int(sqrt(n))<br>        c &#x3D; sqrt_n<br>        while True:<br>            c +&#x3D; 1<br>            d_square &#x3D; c*<em>2 - n<br>            if is_square(d_square):<br>                d_square &#x3D; mpz(d_square)<br>                get_context().precision &#x3D; 2048<br>                d &#x3D; int(sqrt(d_square))<br>                factor_list.append([c+d,c-d])<br>            if len(factor_list)&#x3D;&#x3D;2:<br>                break<br>        return factor_list<br>    factor_list &#x3D; fermat_factorization(n1)<br>    [X1,Y1] &#x3D; factor_list[0]	#费马函数分解<br>    [X2,Y2] &#x3D; factor_list[1]<br>    assert X1</em>Y1 &#x3D;&#x3D; n1<br>    assert X2<em>Y2 &#x3D;&#x3D; n1<br>    p1 &#x3D; gcd(X1,X2)<br>    q1 &#x3D; X1 &#x2F;&#x2F; p1		<br>    p2 &#x3D; gcd(Y1,Y2)<br>    q2 &#x3D; Y1 &#x2F;&#x2F; p2<br>    phi1 &#x3D; (p1-1)</em>(q1-1)<em>(p2-1)</em>(q2-1)	#求φ(n)<br>    d1 &#x3D; invert(e,phi1)		#常规RSA解密流程求d<br>    print(long_to_bytes(gmpy2.powmod(c1,d1,n1)),end&#x3D;’’)	##常规RSA解密流程求明文</p>
-<p>###dp泄露<br>    from gmpy2 import *<br>    from Crypto.Util.number import *<br>    def rsa(e,n,dp,c):<br>        p&#x3D;0<br>        for i in range(1,e):<br>            if (e<em>dp-1)%i&#x3D;&#x3D;0:<br>                p&#x3D;(e</em>dp-1)&#x2F;&#x2F;i+1<br>                if n%p&#x3D;&#x3D;0:<br>                    break<br>        q&#x3D;n&#x2F;&#x2F;p<br>        d&#x3D;invert(e,(p-1)*(q-1))<br>        print(long_to_bytes(pow(c,d,n)))<br>    if <strong>name</strong> &#x3D;&#x3D; “<strong>main</strong>“:<br>        e &#x3D;<br>        n &#x3D;<br>        dp &#x3D;<br>        c &#x3D;<br>        rsa(e,n,dp,c)</p>
-<p>###维纳攻击方法（当e的值非常大的时候使用）<br>文件1：Arithmetic.py（后面引用，勿改名）  </p>
-<pre><code>def egcd(a,b):
-    u, u1 = 1, 0
-    v, v1 = 0, 1
-    while b:
-        q = a // b
-        u, u1 = u1, u - q * u1
-        v, v1 = v1, v - q * v1
-        a, b = b, a - q * b
-    return u, v, a
-def gcd(a,b):
-    a,b=(b,a) if a&lt;b else (a,b)
-    while b:
-        a,b=b,a%b
-    return a
-def modInverse(e,n):
-    return egcd(e,n)[0]%n
-def totient(p,q):
-    return (p-1)*(q-1)
-def bitlength(x):
-    assert x &gt;= 0
-    n = 0
-    while x &gt; 0:
-        n = n+1
-        x = x&gt;&gt;1
-    return n
-def isqrt(n):
-    if n &lt; 0:
-        raise ValueError(&#39;square root not defined for negative numbers&#39;)
-    if n == 0:
-        return 0
-    a, b = divmod(bitlength(n), 2)
-    x = 2**(a+b)
-    while True:
-        y = (x + n//x)//2
-        if y &gt;= x:
-            return x
-        x = y
-def is_perfect_square(n):
-    h = n &amp; 0xF; 
-    if h &gt; 9:
-        return -1 
-    if ( h != 2 and h != 3 and h != 5 and h != 6 and h != 7 and h != 8 ):
-        t = isqrt(n)
-        if t*t == n:
-            return t
-        else:
-            return -1
-    return -1
-</code></pre>
+        <h2 id="RSA算法"><a href="#RSA算法" class="headerlink" title="RSA算法"></a>RSA算法</h2><p><a target="_blank" rel="noopener" href="http://factordb.com/">因数分解网站</a>  </p>
+<h3 id="e的值很小"><a href="#e的值很小" class="headerlink" title="e的值很小"></a>e的值很小</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">n = </span><br><span class="line">e = </span><br><span class="line">c = </span><br><span class="line">//导入n，e，c的值</span><br><span class="line">for i in range(10000):   //遍历循环，找到m值</span><br><span class="line">    m, t = gmpy2.iroot(i*n + c, e)</span><br><span class="line">    if t:</span><br><span class="line">        print(bytearray.fromhex(format(m, &#x27;x&#x27;)).decode()) //将十六进制字符串转换为字节后解密</span><br><span class="line">       	break</span><br></pre></td></tr></table></figure>
+
+<h3 id="两次加密存在一个相同的质数"><a href="#两次加密存在一个相同的质数" class="headerlink" title="两次加密存在一个相同的质数"></a>两次加密存在一个相同的质数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from gmpy2 import powmod as po, gmpy2</span><br><span class="line">import sympy</span><br><span class="line">c1 = </span><br><span class="line">c2 = </span><br><span class="line">n1 = </span><br><span class="line">n2 = </span><br><span class="line">e = </span><br><span class="line">q = gmpy2.gcd(n1, n2)  # 求n1和n2的最大公因数</span><br><span class="line">p1 = n1 // q</span><br><span class="line">p2 = n2 // q</span><br><span class="line">fn1 = (q - 1) * (p1 - 1)  # 求下面的&amp;n</span><br><span class="line">fn2 = (q - 1) * (p2 - 1)  # 求上面的&amp;n</span><br><span class="line">d1 = inverse(e, fn1)  # (de)mod((p-1)*(q-1))=1  求到第一个解密密钥d1</span><br><span class="line">d2 = inverse(e, fn2)  # 求出第二个解密密钥d2</span><br><span class="line">m1 = pow(c1, d1, n1)</span><br><span class="line">m2 = pow(c2, d2, n2)</span><br><span class="line">print(long_to_bytes(m1))</span><br><span class="line">print(long_to_bytes(m2))</span><br></pre></td></tr></table></figure>
+<h3 id="同一个n用两个e进行加密"><a href="#同一个n用两个e进行加密" class="headerlink" title="同一个n用两个e进行加密"></a>同一个n用两个e进行加密</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from gmpy2 import gmpy2</span><br><span class="line">flag1 = </span><br><span class="line">flag2 = </span><br><span class="line">e1 = </span><br><span class="line">e2 = </span><br><span class="line">n = </span><br><span class="line">def rsa_gong_N_def(e1, e2, c1, c2, n):</span><br><span class="line">   	e1, e2, c1, c2, n = int(e1), int(e2), int(c1), int(c2), int(n)</span><br><span class="line">   	s = gmpy2.gcdext(e1, e2)  # 扩展欧几里得算法  t*e1+z*e2=1,求出t和z</span><br><span class="line">   	t = s[1]</span><br><span class="line">   	z = s[2]</span><br><span class="line">   	if t &lt; 0:  # 要求c的s次幂，就要先计算c的模反元素c2r，然后求c2r的-s2次幂</span><br><span class="line">   	    t = - t</span><br><span class="line">   	    c1 = gmpy2.invert(c1, n)  # 求c1的逆元</span><br><span class="line">   	elif z &lt; 0:</span><br><span class="line">   	    z = -z</span><br><span class="line">   	    c2 = gmpy2.invert(c2, n)</span><br><span class="line">   	m = (pow(c1, t, n) * pow(c2, z, n)) % n  # (c1^s1*c2^s2)%n=m%n=m</span><br><span class="line">   	return m</span><br><span class="line">result = rsa_gong_N_def(e1, e2, flag1, flag2, n)</span><br><span class="line">print(long_to_bytes(result))</span><br></pre></td></tr></table></figure>
+<h3 id="有四个质数，其中两个是另外两个的next-prime，已知他们四个数的乘积"><a href="#有四个质数，其中两个是另外两个的next-prime，已知他们四个数的乘积" class="headerlink" title="有四个质数，其中两个是另外两个的next_prime，已知他们四个数的乘积"></a>有四个质数，其中两个是另外两个的next_prime，已知他们四个数的乘积</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">import sympy</span><br><span class="line">e = </span><br><span class="line">n1 = </span><br><span class="line">c1 = </span><br><span class="line">def fermat_factorization(n):</span><br><span class="line">   	factor_list = []</span><br><span class="line">   	get_context().precision = 2048	</span><br><span class="line">   	sqrt_n = int(sqrt(n))</span><br><span class="line">   	c = sqrt_n</span><br><span class="line">   	while True:</span><br><span class="line">   	    c += 1</span><br><span class="line">   	    d_square = c**2 - n</span><br><span class="line">   	    if is_square(d_square):</span><br><span class="line">   	        d_square = mpz(d_square)</span><br><span class="line">   	        get_context().precision = 2048</span><br><span class="line">   	        d = int(sqrt(d_square))</span><br><span class="line">   	        factor_list.append([c+d,c-d])</span><br><span class="line">   	    if len(factor_list)==2:</span><br><span class="line">   	        break</span><br><span class="line">   	return factor_list</span><br><span class="line">factor_list = fermat_factorization(n1)</span><br><span class="line">[X1,Y1] = factor_list[0]	#费马函数分解</span><br><span class="line">[X2,Y2] = factor_list[1]</span><br><span class="line">assert X1*Y1 == n1</span><br><span class="line">assert X2*Y2 == n1</span><br><span class="line">p1 = gcd(X1,X2)</span><br><span class="line">q1 = X1 // p1		</span><br><span class="line">p2 = gcd(Y1,Y2)</span><br><span class="line">q2 = Y1 // p2</span><br><span class="line">phi1 = (p1-1)*(q1-1)*(p2-1)*(q2-1)	#求φ(n)</span><br><span class="line">d1 = invert(e,phi1)		#常规RSA解密流程求d</span><br><span class="line">print(long_to_bytes(gmpy2.powmod(c1,d1,n1)),end=&#x27;&#x27;)	##常规RSA解密流程求明文</span><br></pre></td></tr></table></figure>
+<h3 id="dp泄露"><a href="#dp泄露" class="headerlink" title="dp泄露"></a>dp泄露</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">def rsa(e,n,dp,c):</span><br><span class="line">   	p=0</span><br><span class="line">   	for i in range(1,e):</span><br><span class="line">   	    if (e*dp-1)%i==0:</span><br><span class="line">   	        p=(e*dp-1)//i+1</span><br><span class="line">   	        if n%p==0:</span><br><span class="line">   	            break</span><br><span class="line">   	q=n//p</span><br><span class="line">   	d=invert(e,(p-1)*(q-1))</span><br><span class="line">   	print(long_to_bytes(pow(c,d,n)))</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">   	e =</span><br><span class="line">   	n = </span><br><span class="line">   	dp = </span><br><span class="line">   	c = </span><br><span class="line">   	rsa(e,n,dp,c)</span><br></pre></td></tr></table></figure>
+<h3 id="维纳攻击方法（当e的值非常大的时候使用）"><a href="#维纳攻击方法（当e的值非常大的时候使用）" class="headerlink" title="维纳攻击方法（当e的值非常大的时候使用）"></a>维纳攻击方法（当e的值非常大的时候使用）</h3><p>文件1：Arithmetic.py（后面引用，勿改名）  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">def egcd(a,b):</span><br><span class="line">   	u, u1 = 1, 0</span><br><span class="line">   	v, v1 = 0, 1</span><br><span class="line">   	while b:</span><br><span class="line">   	    q = a // b</span><br><span class="line">   	    u, u1 = u1, u - q * u1</span><br><span class="line">   	    v, v1 = v1, v - q * v1</span><br><span class="line">   	    a, b = b, a - q * b</span><br><span class="line">   	return u, v, a</span><br><span class="line">def gcd(a,b):</span><br><span class="line">   	a,b=(b,a) if a&lt;b else (a,b)</span><br><span class="line">   	while b:</span><br><span class="line">   	    a,b=b,a%b</span><br><span class="line">   	return a</span><br><span class="line">def modInverse(e,n):</span><br><span class="line">	return egcd(e,n)[0]%n</span><br><span class="line">def totient(p,q):</span><br><span class="line">   	return (p-1)*(q-1)</span><br><span class="line">def bitlength(x):</span><br><span class="line">   	assert x &gt;= 0</span><br><span class="line">   	n = 0</span><br><span class="line">   	while x &gt; 0:</span><br><span class="line">   	    n = n+1</span><br><span class="line">   	    x = x&gt;&gt;1</span><br><span class="line">   	return n</span><br><span class="line">def isqrt(n):</span><br><span class="line">   	if n &lt; 0:</span><br><span class="line">   	    raise ValueError(&#x27;square root not defined for negative numbers&#x27;)</span><br><span class="line">   	if n == 0:</span><br><span class="line">   	    return 0</span><br><span class="line">   	a, b = divmod(bitlength(n), 2)</span><br><span class="line">   	x = 2**(a+b)</span><br><span class="line">   	while True:</span><br><span class="line">   	    y = (x + n//x)//2</span><br><span class="line">   	    if y &gt;= x:</span><br><span class="line">   	        return x</span><br><span class="line">   	    x = y</span><br><span class="line">def is_perfect_square(n):</span><br><span class="line">   	h = n &amp; 0xF; </span><br><span class="line">   	if h &gt; 9:</span><br><span class="line">   	    return -1 </span><br><span class="line">   	if ( h != 2 and h != 3 and h != 5 and h != 6 and h != 7 and h != 8 ):</span><br><span class="line">   	    t = isqrt(n)</span><br><span class="line">   	    if t*t == n:</span><br><span class="line">   	        return t</span><br><span class="line">   	    else:</span><br><span class="line">   	        return -1</span><br><span class="line">   	return -1</span><br></pre></td></tr></table></figure>
 <p>文件2：ContinuedFractions.py（后面引用，勿改名）  </p>
-<pre><code>from typing import List,Tuple
-CFListT = List[int]  
-CVListT = List[Tuple[int, int]] 
-def rational_to_contfrac(x: int, y: int) -&gt; Tuple[CFListT, CVListT]:
-    a = x // y
-    cflist = [a]
-    cvlist = [(a, 1)]
-    ppn, ppd = 1, 0 
-    pn, pd = a, 1  
-    while a * y != x:
-        x, y = y, x - a * y
-        a = x // y
-        cflist.append(a)
-        cn, cd = a * pn + ppn, a * pd + ppd
-        cvlist.append((cn, cd))
-        ppn, ppd = pn, pd
-        pn, pd = cn, cd
-return cflist, cvlist
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">from typing import List,Tuple</span><br><span class="line">CFListT = List[int]  </span><br><span class="line">CVListT = List[Tuple[int, int]] </span><br><span class="line">def rational_to_contfrac(x: int, y: int) -&gt; Tuple[CFListT, CVListT]:</span><br><span class="line">    a = x // y</span><br><span class="line">    cflist = [a]</span><br><span class="line">    cvlist = [(a, 1)]</span><br><span class="line">    ppn, ppd = 1, 0 </span><br><span class="line">    pn, pd = a, 1  </span><br><span class="line">    while a * y != x:</span><br><span class="line">        x, y = y, x - a * y</span><br><span class="line">        a = x // y</span><br><span class="line">        cflist.append(a)</span><br><span class="line">        cn, cd = a * pn + ppn, a * pd + ppd</span><br><span class="line">        cvlist.append((cn, cd))</span><br><span class="line">        ppn, ppd = pn, pd</span><br><span class="line">        pn, pd = cn, cd</span><br><span class="line">return cflist, cvlist</span><br></pre></td></tr></table></figure>
 <p>文件3：运行的文件，可随意取名</p>
-<pre><code>import gmpy2
-from gmpy2 import *
-from Crypto.Util.number import *
-import sympy
-import ContinuedFractions, Arithmetic
-def hack_RSA(e,n):
-    _, convergents = ContinuedFractions.rational_to_contfrac(e, n)   
-    for (k,d) in convergents:
-        if k!=0 and (e*d-1)%k == 0:
-            phi = (e*d-1)//k
-            s = n - phi + 1
-            discr = s*s - 4*n
-            if(discr&gt;=0):
-                t = Arithmetic.is_perfect_square(discr)
-                if t!=-1 and (s+t)%2==0:
-                    print(&quot;Hacked!&quot;)
-                    return d
-e=
-n=
-ct=
-d=hack_RSA(e,n)
-print(d)
-h=pow(  ct, d, n)
-print(h)
-print(long_to_bytes(h))
-</code></pre>
-<p>###RSA中的Boneh Durfee Attack攻击方法<br>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/shshss64/article/details/129605810?app_version=6.3.7&code=app_1562916241&csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22129605810%22,%22source%22:%222301_79140522%22%7D&uLinkId=usr1mkqgl919blen&utm_source=app">链接</a></p>
-<pre><code>import time
-debug = True
-strict = False
-helpful_only = True
-dimension_min = 7 # stop removing if lattice reaches that dimension
-def helpful_vectors(BB, modulus):
-    nothelpful = 0
-    for ii in range(BB.dimensions()[0]):
-        if BB[ii,ii] &gt;= modulus:
-            nothelpful += 1
-    print(nothelpful, &quot;/&quot;, BB.dimensions()[0], &quot; vectors are not helpful&quot;)
-# display matrix picture with 0 and X
-def matrix_overview(BB, bound):
-    for ii in range(BB.dimensions()[0]):
-        a = (&#39;%02d &#39; % ii)
-        for jj in range(BB.dimensions()[1]):
-            a += &#39;0&#39; if BB[ii,jj] == 0 else &#39;X&#39;
-            if BB.dimensions()[0] &lt; 60:
-                a += &#39; &#39;
-        if BB[ii, ii] &gt;= bound:
-            a += &#39;~&#39;
-        print(a)
-def remove_unhelpful(BB, monomials, bound, current):
-    # end of our recursive function
-    if current == -1 or BB.dimensions()[0] &lt;= dimension_min:
-        return BB
-    # we start by checking from the end
-    for ii in range(current, -1, -1):
-        # if it is unhelpful:
-        if BB[ii, ii] &gt;= bound:
-            affected_vectors = 0
-            affected_vector_index = 0
-            # let&#39;s check if it affects other vectors
-            for jj in range(ii + 1, BB.dimensions()[0]):
-                if BB[jj, ii] != 0:
-                    affected_vectors += 1
-                    affected_vector_index = jj
-            if affected_vectors == 0:
-                print(&quot;* removing unhelpful vector&quot;, ii)
-                BB = BB.delete_columns([ii])
-                BB = BB.delete_rows([ii])
-                monomials.pop(ii)
-                BB = remove_unhelpful(BB, monomials, bound, ii-1)
-                return BB
-            elif affected_vectors == 1:
-                affected_deeper = True
-                for kk in range(affected_vector_index + 1, BB.dimensions()[0]):
-                    if BB[kk, affected_vector_index] != 0:
-                        affected_deeper = False
-                if affected_deeper and abs(bound - BB[affected_vector_index, affected_vector_index]) &lt; abs(bound - BB[ii, ii]):
-                    print(&quot;* removing unhelpful vectors&quot;, ii, &quot;and&quot;, affected_vector_index)
-                    BB = BB.delete_columns([affected_vector_index, ii])
-                    BB = BB.delete_rows([affected_vector_index, ii])
-                    monomials.pop(affected_vector_index)
-                    monomials.pop(ii)
-                    BB = remove_unhelpful(BB, monomials, bound, ii-1)
-                    return BB
-    # nothing happened
-    return BB
-def boneh_durfee(pol, modulus, mm, tt, XX, YY):
-    # substitution (Herrman and May)
-    PR.&lt;u, x, y&gt; = PolynomialRing(ZZ)
-    Q = PR.quotient(x*y + 1 - u) # u = xy + 1
-    polZ = Q(pol).lift()
-
-    UU = XX*YY + 1
-
-    gg = []
-    for kk in range(mm + 1):
-        for ii in range(mm - kk + 1):
-            xshift = x^ii * modulus^(mm - kk) * polZ(u, x, y)^kk
-            gg.append(xshift)
-    gg.sort()
-
-    # x-shifts list of monomials
-    monomials = []
-    for polynomial in gg:
-        for monomial in polynomial.monomials():
-            if monomial not in monomials:
-                monomials.append(monomial)
-    monomials.sort()
-
-    # y-shifts (selected by Herrman and May)
-    for jj in range(1, tt + 1):
-        for kk in range(floor(mm/tt) * jj, mm + 1):
-            yshift = y^jj * polZ(u, x, y)^kk * modulus^(mm - kk)
-            yshift = Q(yshift).lift()
-            gg.append(yshift) # substitution
-
-    # y-shifts list of monomials
-    for jj in range(1, tt + 1):
-        for kk in range(floor(mm/tt) * jj, mm + 1):
-            monomials.append(u^kk * y^jj)
- 
-    # construct lattice B
-    nn = len(monomials)
-    BB = Matrix(ZZ, nn)
-    for ii in range(nn):
-        BB[ii, 0] = gg[ii](0, 0, 0)
-        for jj in range(1, ii + 1):
-            if monomials[jj] in gg[ii].monomials():
-                BB[ii, jj] = gg[ii].monomial_coefficient(monomials[jj]) * monomials[jj](UU,XX,YY)
-    if helpful_only:
-        BB = remove_unhelpful(BB, monomials, modulus^mm, nn-1)
-        nn = BB.dimensions()[0]
-        if nn == 0:
-            print(&quot;failure&quot;)
-            return 0,0
-    if debug:
-        helpful_vectors(BB, modulus^mm)
-    det = BB.det()
-    bound = modulus^(mm*nn)
-    if det &gt;= bound:
-        print(&quot;We do not have det &lt; bound. Solutions might not be found.&quot;)
-        print(&quot;Try with highers m and t.&quot;)
-        if debug:
-            diff = (log(det) - log(bound)) / log(2)
-            print(&quot;size det(L) - size e^(m*n) = &quot;, floor(diff))
-        if strict:
-            return -1, -1
-    else:
-        print(&quot;det(L) &lt; e^(m*n) (good! If a solution exists &lt; N^delta, it will be found)&quot;)
-    if debug:
-        matrix_overview(BB, modulus^mm)
-    if debug:
-        print(&quot;optimizing basis of the lattice via LLL, this can take a long time&quot;)
-
-    BB = BB.LLL()
-
-    if debug:
-        print(&quot;LLL is done!&quot;)
-    if debug:
-        print(&quot;looking for independent vectors in the lattice&quot;)
-    found_polynomials = False
-    
-    for pol1_idx in range(nn - 1):
-        for pol2_idx in range(pol1_idx + 1, nn):
-            # for i and j, create the two polynomials
-            PR.&lt;w,z&gt; = PolynomialRing(ZZ)
-            pol1 = pol2 = 0
-            for jj in range(nn):
-                pol1 += monomials[jj](w*z+1,w,z) * BB[pol1_idx, jj] / monomials[jj](UU,XX,YY)
-                pol2 += monomials[jj](w*z+1,w,z) * BB[pol2_idx, jj] / monomials[jj](UU,XX,YY)
-            PR.&lt;q&gt; = PolynomialRing(ZZ)
-            rr = pol1.resultant(pol2)
-            if rr.is_zero() or rr.monomials() == [1]:
-                continue
-            else:
-                print(&quot;found them, using vectors&quot;, pol1_idx, &quot;and&quot;, pol2_idx)
-                found_polynomials = True
-                break
-        if found_polynomials:
-            break 
-    if not found_polynomials:
-        print(&quot;no independant vectors could be found. This should very rarely happen...&quot;)
-        return 0, 0 
-    rr = rr(q, q)
-    soly = rr.roots() 
-    if len(soly) == 0:
-        print(&quot;Your prediction (delta) is too small&quot;)
-        return 0, 0
-
-    soly = soly[0][0]
-    ss = pol1(q, soly)
-    solx = ss.roots()[0][0]
-    return solx, soly
-
-def example(): 
-    N =     # the public exponent
-    e = 
-    c = 
-    delta = .28 # this means that d &lt; N^delta
-    m = 4 # size of the lattice (bigger the better/slower)
-    t = int((1-2*delta) * m)  # optimization from Herrmann and May
-    X = 2*floor(N^delta)  # this _might_ be too much
-    Y = floor(N^(1/2))    # correct if p, q are ~ same size
-    P.&lt;x,y&gt; = PolynomialRing(ZZ)
-    A = int((N+1)/2)
-    pol = 1 + x * (A + y)
-    if debug:
-        print(&quot;=== checking values ===&quot;)
-        print(&quot;* delta:&quot;, delta)
-        print(&quot;* delta &lt; 0.292&quot;, delta &lt; 0.292)
-        print(&quot;* size of e:&quot;, int(log(e)/log(2)))
-        print(&quot;* size of N:&quot;, int(log(N)/log(2)))
-        print(&quot;* m:&quot;, m, &quot;, t:&quot;, t)
-
-    if debug:
-        print(&quot;=== running algorithm ===&quot;)
-        start_time = time.time()
-
-    solx, soly = boneh_durfee(pol, e, m, t, X, Y)
- 
-    if solx &gt; 0:
-        print(&quot;=== solution found ===&quot;)
-        if False:
-            print(&quot;x:&quot;, solx)
-            print(&quot;y:&quot;, soly)
- 
-        d = int(pol(solx, soly) / e)
-        print(&quot;private key found:&quot;, d)
-        print(&quot;plaintext:&quot;, pow(c, d, N))
-    else:
-        print(&quot;=== no solution was found ===&quot;)
-
-    if debug:
-        print(&quot;=== %s seconds ===&quot; % (time.time() - start_time))
-
-if __name__ == &quot;__main__&quot;:
-    example()
-</code></pre>
-<p>##prng算法（利用random.getrandbits函数只能产生固定数量的随机数）（梅森旋转算法）<br>###向后恢复随机数<br>    from hashlib import sha256<br>    from randcrack import RandCrack &#x2F;&#x2F;该库专门用来梅森旋转算法的破解<br>    t&#x3D;[]<br>    rc &#x3D; RandCrack()<br>    for i in t:<br>        rc.submit(i)<br>    flag1 &#x3D; rc.predict_getrandbits(32)<br>    flag2 &#x3D; rc.predict_getrandbits(32)<br>    print(sha256((str(flag1)+str(flag2)).encode()).hexdigest())</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">from gmpy2 import *</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">import sympy</span><br><span class="line">import ContinuedFractions, Arithmetic</span><br><span class="line">def hack_RSA(e,n):</span><br><span class="line">    _, convergents = ContinuedFractions.rational_to_contfrac(e, n)   </span><br><span class="line">    for (k,d) in convergents:</span><br><span class="line">        if k!=0 and (e*d-1)%k == 0:</span><br><span class="line">            phi = (e*d-1)//k</span><br><span class="line">            s = n - phi + 1</span><br><span class="line">            discr = s*s - 4*n</span><br><span class="line">            if(discr&gt;=0):</span><br><span class="line">                t = Arithmetic.is_perfect_square(discr)</span><br><span class="line">                if t!=-1 and (s+t)%2==0:</span><br><span class="line">                    print(&quot;Hacked!&quot;)</span><br><span class="line">                    return d</span><br><span class="line">e=</span><br><span class="line">n=</span><br><span class="line">ct=</span><br><span class="line">d=hack_RSA(e,n)</span><br><span class="line">print(d)</span><br><span class="line">h=pow(  ct, d, n)</span><br><span class="line">print(h)</span><br><span class="line">print(long_to_bytes(h))</span><br></pre></td></tr></table></figure>
+<h3 id="RSA中的Boneh-Durfee-Attack攻击方法"><a href="#RSA中的Boneh-Durfee-Attack攻击方法" class="headerlink" title="RSA中的Boneh Durfee Attack攻击方法"></a>RSA中的Boneh Durfee Attack攻击方法</h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/shshss64/article/details/129605810?app_version=6.3.7&code=app_1562916241&csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22129605810%22,%22source%22:%222301_79140522%22%7D&uLinkId=usr1mkqgl919blen&utm_source=app">链接</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">debug = True</span><br><span class="line">strict = False</span><br><span class="line">helpful_only = True</span><br><span class="line">dimension_min = 7 # stop removing if lattice reaches that dimension</span><br><span class="line">def helpful_vectors(BB, modulus):</span><br><span class="line">   	nothelpful = 0</span><br><span class="line">   	for ii in range(BB.dimensions()[0]):</span><br><span class="line">   	    if BB[ii,ii] &gt;= modulus:</span><br><span class="line">   	        nothelpful += 1</span><br><span class="line">   	print(nothelpful, &quot;/&quot;, BB.dimensions()[0], &quot; vectors are not helpful&quot;)</span><br><span class="line"># display matrix picture with 0 and X</span><br><span class="line">def matrix_overview(BB, bound):</span><br><span class="line">    for ii in range(BB.dimensions()[0]):</span><br><span class="line">        a = (&#x27;%02d &#x27; % ii)</span><br><span class="line">        for jj in range(BB.dimensions()[1]):</span><br><span class="line">            a += &#x27;0&#x27; if BB[ii,jj] == 0 else &#x27;X&#x27;</span><br><span class="line">            if BB.dimensions()[0] &lt; 60:</span><br><span class="line">                a += &#x27; &#x27;</span><br><span class="line">        if BB[ii, ii] &gt;= bound:</span><br><span class="line">            a += &#x27;~&#x27;</span><br><span class="line">        print(a)</span><br><span class="line">def remove_unhelpful(BB, monomials, bound, current):</span><br><span class="line">   	# end of our recursive function</span><br><span class="line">   	if current == -1 or BB.dimensions()[0] &lt;= dimension_min:</span><br><span class="line">   	    return BB</span><br><span class="line">   	# we start by checking from the end</span><br><span class="line">   	for ii in range(current, -1, -1):</span><br><span class="line">   	    # if it is unhelpful:</span><br><span class="line">   	    if BB[ii, ii] &gt;= bound:</span><br><span class="line">   	        affected_vectors = 0</span><br><span class="line">   	        affected_vector_index = 0</span><br><span class="line">   	        # let&#x27;s check if it affects other vectors</span><br><span class="line">   	        for jj in range(ii + 1, BB.dimensions()[0]):</span><br><span class="line">   	            if BB[jj, ii] != 0:</span><br><span class="line">   	                affected_vectors += 1</span><br><span class="line">   	                affected_vector_index = jj</span><br><span class="line">   	        if affected_vectors == 0:</span><br><span class="line">   	            print(&quot;* removing unhelpful vector&quot;, ii)</span><br><span class="line">   	            BB = BB.delete_columns([ii])</span><br><span class="line">   	            BB = BB.delete_rows([ii])</span><br><span class="line">   	            monomials.pop(ii)</span><br><span class="line">   	            BB = remove_unhelpful(BB, monomials, bound, ii-1)</span><br><span class="line">   	            return BB</span><br><span class="line">   	        elif affected_vectors == 1:</span><br><span class="line">   	            affected_deeper = True</span><br><span class="line">   	            for kk in range(affected_vector_index + 1, BB.dimensions()[0]):</span><br><span class="line">   	                if BB[kk, affected_vector_index] != 0:</span><br><span class="line">   	                    affected_deeper = False</span><br><span class="line">   	            if affected_deeper and abs(bound - BB[affected_vector_index, affected_vector_index]) &lt; abs(bound - BB[ii, ii]):</span><br><span class="line">   	                print(&quot;* removing unhelpful vectors&quot;, ii, &quot;and&quot;, affected_vector_index)</span><br><span class="line">   	                BB = BB.delete_columns([affected_vector_index, ii])</span><br><span class="line">   	                BB = BB.delete_rows([affected_vector_index, ii])</span><br><span class="line">   	                monomials.pop(affected_vector_index)</span><br><span class="line">   	                monomials.pop(ii)</span><br><span class="line">   	                BB = remove_unhelpful(BB, monomials, bound, ii-1)</span><br><span class="line">   	                return BB</span><br><span class="line">   	# nothing happened</span><br><span class="line">   	return BB</span><br><span class="line">def boneh_durfee(pol, modulus, mm, tt, XX, YY):</span><br><span class="line">   	# substitution (Herrman and May)</span><br><span class="line">   	PR.&lt;u, x, y&gt; = PolynomialRing(ZZ)</span><br><span class="line">   	Q = PR.quotient(x*y + 1 - u) # u = xy + 1</span><br><span class="line">   	polZ = Q(pol).lift()</span><br><span class="line"></span><br><span class="line">   	UU = XX*YY + 1</span><br><span class="line"></span><br><span class="line">   	gg = []</span><br><span class="line">   	for kk in range(mm + 1):</span><br><span class="line">   	    for ii in range(mm - kk + 1):</span><br><span class="line">   	        xshift = x^ii * modulus^(mm - kk) * polZ(u, x, y)^kk</span><br><span class="line">   	        gg.append(xshift)</span><br><span class="line">   	gg.sort()</span><br><span class="line"></span><br><span class="line">   	# x-shifts list of monomials</span><br><span class="line">   	monomials = []</span><br><span class="line">   	for polynomial in gg:</span><br><span class="line">   	    for monomial in polynomial.monomials():</span><br><span class="line">   	        if monomial not in monomials:</span><br><span class="line">   	            monomials.append(monomial)</span><br><span class="line">   	monomials.sort()</span><br><span class="line">   </span><br><span class="line">   	# y-shifts (selected by Herrman and May)</span><br><span class="line">   	for jj in range(1, tt + 1):</span><br><span class="line">   	    for kk in range(floor(mm/tt) * jj, mm + 1):</span><br><span class="line">   	        yshift = y^jj * polZ(u, x, y)^kk * modulus^(mm - kk)</span><br><span class="line">   	        yshift = Q(yshift).lift()</span><br><span class="line">   	        gg.append(yshift) # substitution</span><br><span class="line">   </span><br><span class="line">   	# y-shifts list of monomials</span><br><span class="line">   	for jj in range(1, tt + 1):</span><br><span class="line">   	    for kk in range(floor(mm/tt) * jj, mm + 1):</span><br><span class="line">   	        monomials.append(u^kk * y^jj)</span><br><span class="line">	</span><br><span class="line">   	# construct lattice B</span><br><span class="line">   	nn = len(monomials)</span><br><span class="line">   	BB = Matrix(ZZ, nn)</span><br><span class="line">   	for ii in range(nn):</span><br><span class="line">   	    BB[ii, 0] = gg[ii](0, 0, 0)</span><br><span class="line">   	    for jj in range(1, ii + 1):</span><br><span class="line">   	        if monomials[jj] in gg[ii].monomials():</span><br><span class="line">   	            BB[ii, jj] = gg[ii].monomial_coefficient(monomials[jj]) * monomials[jj](UU,XX,YY)</span><br><span class="line">   	if helpful_only:</span><br><span class="line">   	    BB = remove_unhelpful(BB, monomials, modulus^mm, nn-1)</span><br><span class="line">   	    nn = BB.dimensions()[0]</span><br><span class="line">   	    if nn == 0:</span><br><span class="line">   	        print(&quot;failure&quot;)</span><br><span class="line">   	        return 0,0</span><br><span class="line">   	if debug:</span><br><span class="line">   	    helpful_vectors(BB, modulus^mm)</span><br><span class="line">   	det = BB.det()</span><br><span class="line">   	bound = modulus^(mm*nn)</span><br><span class="line">   	if det &gt;= bound:</span><br><span class="line">   	    print(&quot;We do not have det &lt; bound. Solutions might not be found.&quot;)</span><br><span class="line">   	    print(&quot;Try with highers m and t.&quot;)</span><br><span class="line">   	    if debug:</span><br><span class="line">   	        diff = (log(det) - log(bound)) / log(2)</span><br><span class="line">   	        print(&quot;size det(L) - size e^(m*n) = &quot;, floor(diff))</span><br><span class="line">   	    if strict:</span><br><span class="line">   	        return -1, -1</span><br><span class="line">   	else:</span><br><span class="line">   	    print(&quot;det(L) &lt; e^(m*n) (good! If a solution exists &lt; N^delta, it will be found)&quot;)</span><br><span class="line">   	if debug:</span><br><span class="line">       	matrix_overview(BB, modulus^mm)</span><br><span class="line">   	if debug:</span><br><span class="line">       	print(&quot;optimizing basis of the lattice via LLL, this can take a long time&quot;)</span><br><span class="line"></span><br><span class="line">   	BB = BB.LLL()</span><br><span class="line"></span><br><span class="line">    if debug:</span><br><span class="line">   	    print(&quot;LLL is done!&quot;)</span><br><span class="line">   	if debug:</span><br><span class="line">   	    print(&quot;looking for independent vectors in the lattice&quot;)</span><br><span class="line">   	found_polynomials = False</span><br><span class="line">   	</span><br><span class="line">   	for pol1_idx in range(nn - 1):</span><br><span class="line">   	    for pol2_idx in range(pol1_idx + 1, nn):</span><br><span class="line">   	        # for i and j, create the two polynomials</span><br><span class="line">   	        PR.&lt;w,z&gt; = PolynomialRing(ZZ)</span><br><span class="line">   	        pol1 = pol2 = 0</span><br><span class="line">   	        for jj in range(nn):</span><br><span class="line">   	            pol1 += monomials[jj](w*z+1,w,z) * BB[pol1_idx, jj] / monomials[jj](UU,XX,YY)</span><br><span class="line">   	            pol2 += monomials[jj](w*z+1,w,z) * BB[pol2_idx, jj] / monomials[jj](UU,XX,YY)</span><br><span class="line">   	        PR.&lt;q&gt; = PolynomialRing(ZZ)</span><br><span class="line">   	        rr = pol1.resultant(pol2)</span><br><span class="line">   	        if rr.is_zero() or rr.monomials() == [1]:</span><br><span class="line">   	            continue</span><br><span class="line">   	        else:</span><br><span class="line">   	            print(&quot;found them, using vectors&quot;, pol1_idx, &quot;and&quot;, pol2_idx)</span><br><span class="line">   	            found_polynomials = True</span><br><span class="line">   	            break</span><br><span class="line">   	    if found_polynomials:</span><br><span class="line">   	        break </span><br><span class="line">   	if not found_polynomials:</span><br><span class="line">   	    print(&quot;no independant vectors could be found. This should very rarely happen...&quot;)</span><br><span class="line">   	    return 0, 0 </span><br><span class="line">    rr = rr(q, q)</span><br><span class="line">   	soly = rr.roots() </span><br><span class="line">   	if len(soly) == 0:</span><br><span class="line">   	    print(&quot;Your prediction (delta) is too small&quot;)</span><br><span class="line">   	    return 0, 0</span><br><span class="line"></span><br><span class="line">   	soly = soly[0][0]</span><br><span class="line">   	ss = pol1(q, soly)</span><br><span class="line">   	solx = ss.roots()[0][0]</span><br><span class="line">   	return solx, soly</span><br><span class="line"></span><br><span class="line">def example(): </span><br><span class="line">   	N =     # the public exponent</span><br><span class="line">   	e = </span><br><span class="line">   	c = </span><br><span class="line">   	delta = .28 # this means that d &lt; N^delta</span><br><span class="line">   	m = 4 # size of the lattice (bigger the better/slower)</span><br><span class="line">   	t = int((1-2*delta) * m)  # optimization from Herrmann and May</span><br><span class="line">   	X = 2*floor(N^delta)  # this _might_ be too much</span><br><span class="line">   	Y = floor(N^(1/2))    # correct if p, q are ~ same size</span><br><span class="line">   	P.&lt;x,y&gt; = PolynomialRing(ZZ)</span><br><span class="line">   	A = int((N+1)/2)</span><br><span class="line">   	pol = 1 + x * (A + y)</span><br><span class="line">   	if debug:</span><br><span class="line">   	    print(&quot;=== checking values ===&quot;)</span><br><span class="line">   	    print(&quot;* delta:&quot;, delta)</span><br><span class="line">   	    print(&quot;* delta &lt; 0.292&quot;, delta &lt; 0.292)</span><br><span class="line">   	    print(&quot;* size of e:&quot;, int(log(e)/log(2)))</span><br><span class="line">   	    print(&quot;* size of N:&quot;, int(log(N)/log(2)))</span><br><span class="line">   	    print(&quot;* m:&quot;, m, &quot;, t:&quot;, t)</span><br><span class="line"></span><br><span class="line">   	if debug:</span><br><span class="line">   	    print(&quot;=== running algorithm ===&quot;)</span><br><span class="line">   	    start_time = time.time()</span><br><span class="line"></span><br><span class="line">   	solx, soly = boneh_durfee(pol, e, m, t, X, Y)</span><br><span class="line">	</span><br><span class="line">   	if solx &gt; 0:</span><br><span class="line">   	    print(&quot;=== solution found ===&quot;)</span><br><span class="line">   	    if False:</span><br><span class="line">   	        print(&quot;x:&quot;, solx)</span><br><span class="line">   	        print(&quot;y:&quot;, soly)</span><br><span class="line">	</span><br><span class="line">   	    d = int(pol(solx, soly) / e)</span><br><span class="line">   	    print(&quot;private key found:&quot;, d)</span><br><span class="line">   	    print(&quot;plaintext:&quot;, pow(c, d, N))</span><br><span class="line">   	else:</span><br><span class="line">   	    print(&quot;=== no solution was found ===&quot;)</span><br><span class="line"></span><br><span class="line">   	if debug:</span><br><span class="line">   	    print(&quot;=== %s seconds ===&quot; % (time.time() - start_time))</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">   	example()</span><br></pre></td></tr></table></figure>
+<h2 id="prng算法（利用random-getrandbits函数只能产生固定数量的随机数）（梅森旋转算法）"><a href="#prng算法（利用random-getrandbits函数只能产生固定数量的随机数）（梅森旋转算法）" class="headerlink" title="prng算法（利用random.getrandbits函数只能产生固定数量的随机数）（梅森旋转算法）"></a>prng算法（利用random.getrandbits函数只能产生固定数量的随机数）（梅森旋转算法）</h2><h3 id="向后恢复随机数"><a href="#向后恢复随机数" class="headerlink" title="向后恢复随机数"></a>向后恢复随机数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from hashlib import sha256</span><br><span class="line">from randcrack import RandCrack //该库专门用来梅森旋转算法的破解</span><br><span class="line">t=[]</span><br><span class="line">rc = RandCrack()</span><br><span class="line">for i in t:</span><br><span class="line">   	rc.submit(i)</span><br><span class="line">flag1 = rc.predict_getrandbits(32)</span><br><span class="line">flag2 = rc.predict_getrandbits(32)</span><br><span class="line">print(sha256((str(flag1)+str(flag2)).encode()).hexdigest())</span><br></pre></td></tr></table></figure>
 <p>利用别人写的脚本    </p>
-<pre><code>from random import Random
-def inverse_right(res,shift,bits=32):
-    tmp=res
-    for i in range(bits//shift):
-        tmp=res^tmp&gt;&gt;shift
-    return tmp
-def inverse_left_mask(res,shift,mask,bits=32):
-    tmp=res
-    for i in range(bits//shift):
-        tmp=res^tmp&lt;&lt;shift&amp;mask
-    return tmp
-def inv_extract_number(y):
-    y=inverse_right(y,18)
-    y=inverse_left_mask(y,15,4022730752)
-    y=inverse_left_mask(y,7,2636928640)
-    y=inverse_right(y,11)
-    return y&amp;0xffffffff
-def recover_mt(record):
-    state=[inv_extract_number(i) for i in record][:624]
-    gen=Random()
-    gen.setstate((3,tuple(state+[0]),None))
-    return gen
-ss=[]
-mt=recover_mt(ss)
-for i in range(624):
-    mt.getrandbits(32)
-print(mt.getrandbits(32))
-</code></pre>
-<p>###向前恢复随机数<br>首先下载库  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from random import Random</span><br><span class="line">def inverse_right(res,shift,bits=32):</span><br><span class="line">	tmp=res</span><br><span class="line">	for i in range(bits//shift):</span><br><span class="line">		tmp=res^tmp&gt;&gt;shift</span><br><span class="line">	return tmp</span><br><span class="line">def inverse_left_mask(res,shift,mask,bits=32):</span><br><span class="line">	tmp=res</span><br><span class="line">	for i in range(bits//shift):</span><br><span class="line">		tmp=res^tmp&lt;&lt;shift&amp;mask</span><br><span class="line">	return tmp</span><br><span class="line">def inv_extract_number(y):</span><br><span class="line">	y=inverse_right(y,18)</span><br><span class="line">	y=inverse_left_mask(y,15,4022730752)</span><br><span class="line">	y=inverse_left_mask(y,7,2636928640)</span><br><span class="line">	y=inverse_right(y,11)</span><br><span class="line">	return y&amp;0xffffffff</span><br><span class="line">def recover_mt(record):</span><br><span class="line">	state=[inv_extract_number(i) for i in record][:624]</span><br><span class="line">	gen=Random()</span><br><span class="line">	gen.setstate((3,tuple(state+[0]),None))</span><br><span class="line">	return gen</span><br><span class="line">ss=[]</span><br><span class="line">mt=recover_mt(ss)</span><br><span class="line">for i in range(624):</span><br><span class="line">	mt.getrandbits(32)</span><br><span class="line">print(mt.getrandbits(32))</span><br></pre></td></tr></table></figure>
+<h3 id="向前恢复随机数"><a href="#向前恢复随机数" class="headerlink" title="向前恢复随机数"></a>向前恢复随机数</h3><p>首先下载库  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install extend_mt19937_predictor</span><br></pre></td></tr></table></figure>
 <p>然后使用代码  </p>
-<pre><code>from extend_mt19937_predictor import ExtendMT19937Predictor
-numbers = []
-predictor = ExtendMT19937Predictor()
-
-for i in range(628):
-    predictor.setrandbits(numbers[i], 32)
-result = [predictor.backtrack_getrandbits(32) for _ in range(625)]
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from extend_mt19937_predictor import ExtendMT19937Predictor</span><br><span class="line">numbers = []</span><br><span class="line">predictor = ExtendMT19937Predictor()</span><br><span class="line"></span><br><span class="line">for i in range(628):</span><br><span class="line">	predictor.setrandbits(numbers[i], 32)</span><br><span class="line">result = [predictor.backtrack_getrandbits(32) for _ in range(625)]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>梅森旋转算法（亲测有效）  </p>
-<pre><code>from Crypto.Util.number import *
-from hashlib import md5
-import random
-def _int32(x):
-    return int(0xFFFFFFFF &amp; x)
-class MT19937:
-    def __init__(self, seed=0):
-        self.mt = [0] * 624
-        self.mt[0] = seed
-        self.mti = 0
-        for i in range(1, 624):
-            self.mt[i] = _int32(1812433253 * (self.mt[i - 1] ^ self.mt[i - 1] &gt;&gt; 30) + i)
-    def getstate(self,op=False):
-        if self.mti == 0 and op==False:
-            self.twist()
-        y = self.mt[self.mti]
-        y = y ^ y &gt;&gt; 11
-        y = y ^ y &lt;&lt; 7 &amp; 2636928640
-        y = y ^ y &lt;&lt; 15 &amp; 4022730752
-        y = y ^ y &gt;&gt; 18
-        self.mti = (self.mti + 1) % 624
-        return _int32(y)
-    def twist(self):
-        for i in range(0, 624):
-            y = _int32((self.mt[i] &amp; 0x80000000) + (self.mt[(i + 1) % 624] &amp; 0x7fffffff))
-        self.mt[i] = (y &gt;&gt; 1) ^ self.mt[(i + 397) % 624]
-            if y % 2 != 0:
-                self.mt[i] = self.mt[i] ^ 0x9908b0df
-    def inverse_right(self,res, shift, mask=0xffffffff, bits=32):
-        tmp = res
-        for i in range(bits // shift):
-            tmp = res ^ tmp &gt;&gt; shift &amp; mask
-        return tmp
-    def inverse_left(self,res, shift, mask=0xffffffff, bits=32):
-        tmp = res
-        for i in range(bits // shift):
-            tmp = res ^ tmp &lt;&lt; shift &amp; mask
-        return tmp
-    def extract_number(self,y):
-        y = y ^ y &gt;&gt; 11
-        y = y ^ y &lt;&lt; 7 &amp; 2636928640
-        y = y ^ y &lt;&lt; 15 &amp; 4022730752
-        y = y ^ y &gt;&gt; 18
-        return y&amp;0xffffffff
-    def recover(self,y):
-        y = self.inverse_right(y,18)
-        y = self.inverse_left(y,15,4022730752)
-        y = self.inverse_left(y,7,2636928640)
-        y = self.inverse_right(y,11)
-        return y&amp;0xffffffff
-    def setstate(self,s):
-        if(len(s)!=624):
-            raise ValueError(&quot;The length of prediction must be 624!&quot;)
-        for i in range(624):
-            self.mt[i]=self.recover(s[i])
-        #self.mt=s
-        self.mti=0
-    def predict(self,s):
-        self.setstate(s)
-        self.twist()
-        return self.getstate(True)
-    def invtwist(self):
-        high = 0x80000000
-        low = 0x7fffffff
-        mask = 0x9908b0df
-        for i in range(623,-1,-1):
-            tmp = self.mt[i]^self.mt[(i+397)%624]
-            if tmp &amp; high == high:
-                tmp ^= mask
-                tmp &lt;&lt;= 1
-                tmp |= 1
-            else:
-                tmp &lt;&lt;=1
-            res = tmp&amp;high
-            tmp = self.mt[i-1]^self.mt[(i+396)%624]
-            if tmp &amp; high == high:
-                tmp ^= mask
-                tmp &lt;&lt;= 1
-                tmp |= 1
-            else:
-                tmp &lt;&lt;=1
-            res |= (tmp)&amp;low
-            self.mt[i] = res
-def example():
-    D=MT19937(48)
-    print(D.getstate())
-    print(D.mt[:5])
-    print(D.recover(90324435))
-    print(D.extract_number(90324435))
-    D.twist()
-    print(D.mt[:5])
-    D.invtwist()
-    print(D.mt[:5])
-example()#Main Below
-</code></pre>
-<p>##ecc<br>###p、a、b的值较小的时候：</p>
-<pre><code>p =  
-a =   
-b =   
-E = EllipticCurve(GF(p),[a,b])  
-P = E(,)
-Q = E(,)
-k =  discrete_log(Q,P,operation = &#39;+&#39;)
-print(k)
-</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">from Crypto.Util.number import *</span><br><span class="line">from hashlib import md5</span><br><span class="line">import random</span><br><span class="line">def _int32(x):</span><br><span class="line">   	return int(0xFFFFFFFF &amp; x)</span><br><span class="line">class MT19937:</span><br><span class="line">   	def __init__(self, seed=0):</span><br><span class="line">       	self.mt = [0] * 624</span><br><span class="line">       	self.mt[0] = seed</span><br><span class="line">       	self.mti = 0</span><br><span class="line">       	for i in range(1, 624):</span><br><span class="line">           	self.mt[i] = _int32(1812433253 * (self.mt[i - 1] ^ self.mt[i - 1] &gt;&gt; 30) + i)</span><br><span class="line">   	def getstate(self,op=False):</span><br><span class="line">   	    if self.mti == 0 and op==False:</span><br><span class="line">   	        self.twist()</span><br><span class="line">   	    y = self.mt[self.mti]</span><br><span class="line">   	    y = y ^ y &gt;&gt; 11</span><br><span class="line">   	    y = y ^ y &lt;&lt; 7 &amp; 2636928640</span><br><span class="line">   	    y = y ^ y &lt;&lt; 15 &amp; 4022730752</span><br><span class="line">   	    y = y ^ y &gt;&gt; 18</span><br><span class="line">   	    self.mti = (self.mti + 1) % 624</span><br><span class="line">   	    return _int32(y)</span><br><span class="line">   	def twist(self):</span><br><span class="line">   	    for i in range(0, 624):</span><br><span class="line">   	        y = _int32((self.mt[i] &amp; 0x80000000) + (self.mt[(i + 1) % 624] &amp; 0x7fffffff))</span><br><span class="line">           self.mt[i] = (y &gt;&gt; 1) ^ self.mt[(i + 397) % 624]</span><br><span class="line">   	        if y % 2 != 0:</span><br><span class="line">   	            self.mt[i] = self.mt[i] ^ 0x9908b0df</span><br><span class="line">    def inverse_right(self,res, shift, mask=0xffffffff, bits=32):</span><br><span class="line">   	    tmp = res</span><br><span class="line">   	    for i in range(bits // shift):</span><br><span class="line">   	        tmp = res ^ tmp &gt;&gt; shift &amp; mask</span><br><span class="line">        return tmp</span><br><span class="line">   	def inverse_left(self,res, shift, mask=0xffffffff, bits=32):</span><br><span class="line">        tmp = res</span><br><span class="line">        for i in range(bits // shift):</span><br><span class="line">            tmp = res ^ tmp &lt;&lt; shift &amp; mask</span><br><span class="line">        return tmp</span><br><span class="line">    def extract_number(self,y):</span><br><span class="line">        y = y ^ y &gt;&gt; 11</span><br><span class="line">        y = y ^ y &lt;&lt; 7 &amp; 2636928640</span><br><span class="line">        y = y ^ y &lt;&lt; 15 &amp; 4022730752</span><br><span class="line">        y = y ^ y &gt;&gt; 18</span><br><span class="line">        return y&amp;0xffffffff</span><br><span class="line">    def recover(self,y):</span><br><span class="line">        y = self.inverse_right(y,18)</span><br><span class="line">        y = self.inverse_left(y,15,4022730752)</span><br><span class="line">        y = self.inverse_left(y,7,2636928640)</span><br><span class="line">        y = self.inverse_right(y,11)</span><br><span class="line">        return y&amp;0xffffffff</span><br><span class="line">    def setstate(self,s):</span><br><span class="line">        if(len(s)!=624):</span><br><span class="line">            raise ValueError(&quot;The length of prediction must be 624!&quot;)</span><br><span class="line">        for i in range(624):</span><br><span class="line">            self.mt[i]=self.recover(s[i])</span><br><span class="line">        #self.mt=s</span><br><span class="line">        self.mti=0</span><br><span class="line">    def predict(self,s):</span><br><span class="line">        self.setstate(s)</span><br><span class="line">        self.twist()</span><br><span class="line">        return self.getstate(True)</span><br><span class="line">    def invtwist(self):</span><br><span class="line">        high = 0x80000000</span><br><span class="line">        low = 0x7fffffff</span><br><span class="line">        mask = 0x9908b0df</span><br><span class="line">        for i in range(623,-1,-1):</span><br><span class="line">            tmp = self.mt[i]^self.mt[(i+397)%624]</span><br><span class="line">            if tmp &amp; high == high:</span><br><span class="line">                tmp ^= mask</span><br><span class="line">                tmp &lt;&lt;= 1</span><br><span class="line">                tmp |= 1</span><br><span class="line">            else:</span><br><span class="line">                tmp &lt;&lt;=1</span><br><span class="line">            res = tmp&amp;high</span><br><span class="line">            tmp = self.mt[i-1]^self.mt[(i+396)%624]</span><br><span class="line">            if tmp &amp; high == high:</span><br><span class="line">                tmp ^= mask</span><br><span class="line">                tmp &lt;&lt;= 1</span><br><span class="line">                tmp |= 1</span><br><span class="line">            else:</span><br><span class="line">                tmp &lt;&lt;=1</span><br><span class="line">            res |= (tmp)&amp;low</span><br><span class="line">            self.mt[i] = res</span><br><span class="line">def example():</span><br><span class="line">    D=MT19937(48)</span><br><span class="line">    print(D.getstate())</span><br><span class="line">    print(D.mt[:5])</span><br><span class="line">    print(D.recover(90324435))</span><br><span class="line">    print(D.extract_number(90324435))</span><br><span class="line">    D.twist()</span><br><span class="line">    print(D.mt[:5])</span><br><span class="line">    D.invtwist()</span><br><span class="line">    print(D.mt[:5])</span><br><span class="line">example()#Main Below</span><br></pre></td></tr></table></figure>
+
+<h2 id="ecc"><a href="#ecc" class="headerlink" title="ecc"></a>ecc</h2><h3 id="p、a、b的值较小的时候："><a href="#p、a、b的值较小的时候：" class="headerlink" title="p、a、b的值较小的时候："></a>p、a、b的值较小的时候：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">p =  </span><br><span class="line">a =   </span><br><span class="line">b =   </span><br><span class="line">E = EllipticCurve(GF(p),[a,b])  </span><br><span class="line">P = E(,)</span><br><span class="line">Q = E(,)</span><br><span class="line">k =  discrete_log(Q,P,operation = &#x27;+&#x27;)</span><br><span class="line">print(k)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/09/22/crypto/" data-id="cm1db3jyh0000tktwgd4t3umj" data-title="crypto" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/09/22/crypto/" data-id="cm1ec5c9h0003q0tw1afj97ed" data-title="crypto" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -650,10 +215,6 @@ print(k)
             <a href="/2024/09/22/pwn/">pwn</a>
           </li>
         
-          <li>
-            <a href="/2024/09/22/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -667,7 +228,7 @@ print(k)
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2024 John Doe<br>
+      &copy; 2024 Liangyu Chen<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -4,22 +4,22 @@
   <meta charset="utf-8">
   
   
-  <title>pwn | Hexo</title>
+  <title>pwn | cly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="首先是一个github上面感觉非常强的文章 #gdb的使用查看栈内情况 byte $eax12x &#x2F;24bx $eaxhexdump byte $esp+0x4 32  使用终端得到汇编代码对应的十六进制 asm -f hex &quot;mov eax, 17&quot;1234&#96;&#96;&#96;把十六进制翻译成汇编语言（类似ghidra里面的那种）&#96;&#96;&#96;pwn disasm &quot;31C9F7E1B0055168737">
+  <meta name="description" content="首先是一个github上面感觉非常强的文章 gdb的使用查看栈内情况 byte $eax12x &#x2F;24bx $eaxhexdump byte $esp+0x4 32  使用终端得到汇编代码对应的十六进制 asm -f hex &quot;mov eax, 17&quot;1234&#96;&#96;&#96;把十六进制翻译成汇编语言（类似ghidra里面的那种）&#96;&#96;&#96;pwn disasm &quot;31C9F7E1B00551687373">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pwn">
 <meta property="og:url" content="http://example.com/2024/09/22/pwn/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="首先是一个github上面感觉非常强的文章 #gdb的使用查看栈内情况 byte $eax12x &#x2F;24bx $eaxhexdump byte $esp+0x4 32  使用终端得到汇编代码对应的十六进制 asm -f hex &quot;mov eax, 17&quot;1234&#96;&#96;&#96;把十六进制翻译成汇编语言（类似ghidra里面的那种）&#96;&#96;&#96;pwn disasm &quot;31C9F7E1B0055168737">
+<meta property="og:site_name" content="cly">
+<meta property="og:description" content="首先是一个github上面感觉非常强的文章 gdb的使用查看栈内情况 byte $eax12x &#x2F;24bx $eaxhexdump byte $esp+0x4 32  使用终端得到汇编代码对应的十六进制 asm -f hex &quot;mov eax, 17&quot;1234&#96;&#96;&#96;把十六进制翻译成汇编语言（类似ghidra里面的那种）&#96;&#96;&#96;pwn disasm &quot;31C9F7E1B00551687373">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-09-22T04:25:58.000Z">
-<meta property="article:modified_time" content="2024-09-22T07:13:13.242Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2024-09-22T10:05:27.098Z">
+<meta property="article:author" content="Liangyu Chen">
 <meta property="article:tag" content="ctf pwn">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="cly" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -44,7 +44,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">cly</a>
       </h1>
       
     </div>
@@ -95,7 +95,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>首先是一个github上面感觉非常强的<a target="_blank" rel="noopener" href="https://github.com/Dvd848/CTFs/tree/master/2018_35C3_Junior/Wee/">文章</a></p>
-<p>#gdb的使用<br>查看栈内情况</p>
+<h1 id="gdb的使用"><a href="#gdb的使用" class="headerlink" title="gdb的使用"></a>gdb的使用</h1><p>查看栈内情况</p>
 <figure class="highlight plaintext"><figcaption><span>byte $eax</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x /24bx $eax</span><br><span class="line">hexdump byte $esp+0x4 32</span><br></pre></td></tr></table></figure>
 
 <p>使用终端得到汇编代码对应的十六进制</p>
@@ -107,7 +107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/09/22/pwn/" data-id="cm1db3jze0009tktw8s2t10pi" data-title="pwn" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2024/09/22/pwn/" data-id="cm1ec5c9i0004q0tw339oehwa" data-title="pwn" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -128,11 +128,6 @@
       </div>
     </a>
   
-  
-    <a href="/2024/09/22/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
-    </a>
   
 </nav>
 
@@ -198,10 +193,6 @@
             <a href="/2024/09/22/pwn/">pwn</a>
           </li>
         
-          <li>
-            <a href="/2024/09/22/hello-world/">Hello World</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -215,7 +206,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       
-      &copy; 2024 John Doe<br>
+      &copy; 2024 Liangyu Chen<br>
       Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
