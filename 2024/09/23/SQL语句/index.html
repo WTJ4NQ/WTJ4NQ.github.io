@@ -1,0 +1,688 @@
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,inital-scale=1,user-scalable=no">
+  <title>SQL语句 [ cly ]</title>
+  <!-- bootstrapcss文件 -->
+ <!--  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<!--   
+<link rel="stylesheet" href="/css/zhl.css">
+
+ -->
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/fork-awesome.min.css">
+    
+      <link rel="stylesheet" href="/css/zhl.css">
+    
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+  <div id="wrap" class="col-md-12">
+    <div id="header">
+	<div id="header-left">
+	<h1 id="header-title"> 
+	<a href="/">
+		cly
+	</a>
+	</h1>
+	
+	</div>
+	<div id="header-right">
+		
+		
+		<a href="/"  title="home"><i class="fa fa-home ">home</i></a>
+		
+		<a target="_blank" rel="noopener" href="https://github.com/lizehongss/demo_show"  title="demo"><i class="fa fa-code ">demo</i></a>
+		
+		<a href="/about"  title="about"><i class="fa fa-user ">about</i></a>
+		
+		<a href="/"  title="music"><i class="fa fa-music ">music</i></a>
+		
+		
+	</div>
+</div>
+
+  </div>
+  </div>
+  <div id="content" class="row">
+    <div id="content-left" class="col-md-4">
+      
+
+	
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-tags">标签</h3>
+		<div class="widget tags">
+		<a class="tag-span-link" href="/tags/SQL/" rel="tag">SQL<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-crypto/" rel="tag">ctf crypto<span class="tag-span-count">2</span></a> <a class="tag-span-link" href="/tags/ctf-pwn/" rel="tag">ctf pwn<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-web/" rel="tag">ctf web<span class="tag-span-count">1</span></a>
+		</div>
+	</div>
+
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-archive">归档</h3>
+		<div class="widget">
+			<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">5</span></li></ul>
+		</div>
+	</div>
+
+
+
+    </div>
+    <div id="content-right" class="col-md-8">
+    
+<article id="post">
+	<div class="post-title">
+  <h1>SQL语句</h1>
+  	</div>
+  <div class="page-meta">
+  	<span class="fa-wrap">
+  		<i class="fa fa-clock-o"></i>
+  		<span class="date-meta">2024-09-23</span>
+  	</span>
+  	<span class="fa-wrap">
+  		
+  		<i class="fa fa-tags"></i>
+  		<span class="tags-meta">SQL</span>
+  		
+  	</span>
+  	<span class="fa-wrap">
+  		
+  	</span>
+  </div>
+  <div class="post-content">
+  <h2 id="定义模式"><a href="#定义模式" class="headerlink" title="定义模式"></a>定义模式</h2><p><strong>语句：create schema &lt;模式名&gt; authorization &lt;用户名&gt;</strong><br>如果没有指定&lt;模式名&gt;，那么&lt;模式名&gt;隐含为&lt;用户名&gt;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create schema “s-t” authorization wang;//定义一个学生-课程模式S-T</span><br><span class="line">create schema authorization wang;//为用户wang定义了一个模式S-T</span><br></pre></td></tr></table></figure>
+<p>在create schema中可以接受create table，create view和grant子句。<br>create schema &lt;模式名&gt; authorization &lt;用户名&gt;[&lt;表定义子句&gt;|&lt;视图定义子句&gt;|&lt;授权定义子句&gt;]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//为用户zhang创建了一个模式test，并在其中定义了一个表tab1。</span><br><span class="line">create schema test authorization zhang</span><br><span class="line">create table tab1(col1 smallint,</span><br><span class="line">col2 int,</span><br><span class="line">col3 char(20),</span><br><span class="line">col4 numeric(10,3),</span><br><span class="line">col5 decimal(5,2)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="删除模式"><a href="#删除模式" class="headerlink" title="删除模式"></a>删除模式</h2><p><strong>语句：drop schema &lt;模式名&gt; &lt;cascade|restrict&gt;</strong><br>• cascade(级联)：删除模式的同时把该模式中所有的数据库对象全部删除<br>• restrict(限制)：如果该模式中定义了下属的数据库对象（如表、视图等），则拒绝该删除语句的执行。<br>• 当该模式中没有任何下属的对象时 才能执行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop schema zhang cascade;/* 删除模式zhang，同时该模式中定义的表也被删除*/</span><br></pre></td></tr></table></figure>
+<h2 id="定义基本表"><a href="#定义基本表" class="headerlink" title="定义基本表"></a>定义基本表</h2><p><strong>语句：create table &lt;表名&gt;</strong><br>（&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt; ]<br>[，&lt;列名&gt; &lt;数据类型&gt;[ &lt;列级完整性约束条件&gt;] ] …<br>[，&lt;表级完整性约束条件&gt; ] ）；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">/* 建立“学生”表student，学号是主码，姓名取值唯一*/</span><br><span class="line">create table Student</span><br><span class="line">(Sno char(9) primary key, /* 列级完整性约束条件*/</span><br><span class="line">Sname char(20) unique,/* sname取唯一值*/</span><br><span class="line">Ssex char(2),</span><br><span class="line">Sage smallint,</span><br><span class="line">Sdept char(20)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/* 建立一个“学生选课”表SC*/</span><br><span class="line">create table SC</span><br><span class="line">(Sno char(9),</span><br><span class="line">Cno char(4),</span><br><span class="line">Grade smallint,</span><br><span class="line">primary key (Sno,Cno),/* 主码由两个属性构成，必须作为表级完整性进行定义*/</span><br><span class="line">foreign key (Sno) references student(Sno),/* 表级完整性约束条件，sno是外码，被参照表是student */</span><br><span class="line">foreign key (Cno) references course(Cno)/* 表级完整性约束条件， cno是外码，被参照表是course*/</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">/* 建立一个“课程”表Course*/</span><br><span class="line">create table Course</span><br><span class="line">(Cno char(4) primary key,</span><br><span class="line">Cname char(40) not null,</span><br><span class="line">Cpno char(4),</span><br><span class="line">Ccredit smallint,</span><br><span class="line">foreign key (Cpno) references course(Cno)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>定义基本表所属模式<br>• 方法一：在表名中明显地给出模式名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Create table “S-T”.Student（......）; /*模式名为 S-T*/</span><br><span class="line">Create table “S-T”.Cource（......）;</span><br><span class="line">Create table “S-T”.SC（......）;</span><br></pre></td></tr></table></figure>
+<p>• 方法二：在创建模式语句中同时创建表<br>• 方法三：设置所属的模式<br><strong>显示当前的搜索路径：SHOW search_path;</strong><br><strong>搜索路径的当前默认值是：$user, PUBLIC</strong><br>其含义是首先搜索与用户名相同的模式名，如果该模式名不存在，则使用PUBLIC模式。<br>DBA可以设置搜索路径，然后定义基本表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET search_path TO “S-T”, PUBLIC；</span><br><span class="line">Create table Student（......）;</span><br></pre></td></tr></table></figure>
+<p>结果建立了S-T.Student基本表。<br>DBMS发现搜索路径中第一个模式名S-T存在，就把该模式作为基本表Student所属的模式。</p>
+<h2 id="修改基本表"><a href="#修改基本表" class="headerlink" title="修改基本表"></a>修改基本表</h2><p><strong>语句：alter table &lt;表名&gt;</strong><br>[ add &lt;新列名&gt; &lt;数据类型&gt; [ 完整性约束 ] ]<br>[ drop &lt;完整性约束名&gt; ]<br>[ alter column&lt;列名&gt; &lt;数据类型&gt; ]；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/* 向Student表增加“入学时间”列，其数据类型为日期型。*/</span><br><span class="line">alter table student add S_entrance date；</span><br><span class="line">/* 不论基本表中原来是否已有数据，新增加的列一律为空值。*/</span><br><span class="line"></span><br><span class="line">/* 将年龄的数据类型由字符型（假设原来的数据类型是字符型）改为整数。*/</span><br><span class="line">alter table student alter column Sage int；</span><br><span class="line">alter table student modify Sage int;</span><br><span class="line"></span><br><span class="line">/* 增加课程名称必须取唯一值的约束条件。*/</span><br><span class="line">alter table course add unique(cname);</span><br></pre></td></tr></table></figure>
+<h2 id="删除基本表"><a href="#删除基本表" class="headerlink" title="删除基本表"></a>删除基本表</h2><p><strong>语句：drop table &lt;表名&gt;［restrict| cascade］；</strong></p>
+<p>RESTRICT：删除表是有限制的。<br>欲删除的基本表不能被其他表的约束所引用（如check，foreign key等）<br>如果存在依赖该表的对象（视图、触发器、存储过程、函数），则此表不能被删除</p>
+<p>CASCADE：删除该表没有限制。<br>在删除基本表的同时，相关的依赖对象一起删除</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/* 删除Student表。*/</span><br><span class="line">drop table student cascade;</span><br><span class="line">/* 基本表定义被删除，数据被删除*/</span><br><span class="line">/* 表上建立的索引、视图、触发器等一般也将被删除*/</span><br><span class="line"></span><br><span class="line">/* 若表上建有视图，选择RESTRICT时表不能删除。*/</span><br><span class="line">create view Is_student</span><br><span class="line">as</span><br><span class="line">select Sno, Sname, Sage</span><br><span class="line">from student</span><br><span class="line">where Sdept=‘IS’;</span><br><span class="line">drop table student restrict;</span><br><span class="line">--error: cannot drop table student because other objects depend on it</span><br><span class="line"></span><br><span class="line">/* 如果选择CASCADE时可以删除表，视图也自动被删除*/</span><br><span class="line">drop table student cascade;</span><br><span class="line">--notice: drop cascades to view is_student</span><br><span class="line">select * from Is_student;</span><br><span class="line">--error: relation &quot; is_student &quot; does not exist</span><br></pre></td></tr></table></figure>
+<h2 id="建立索引"><a href="#建立索引" class="headerlink" title="建立索引"></a>建立索引</h2><p><strong>语句：create [unique] [cluster] index &lt;索引名&gt; on &lt;表名&gt;(&lt;列名&gt;[&lt;次序&gt;][,&lt;列名&gt;[&lt;次序&gt;] ]…)；</strong><br>• ASC(升序)或DESC(降序)，默认值为ASC<br>• UNIQUE表明此索引的每一个索引值只对应唯一的数据记录。<br>• CLUSTER表示要建立的索引是聚簇索引。聚簇索引是指索引顺序与表中记录的物理顺序一致的索引组织。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/* 为学生-课程数据库中的Student，Course，SC三个表建立索引*/</span><br><span class="line">create unique index Stusno on student(Sno)；</span><br><span class="line">create unique index Coucno on course(Cno)；</span><br><span class="line">create unique index Scno on sc(Sno asc, Cno desc)；</span><br><span class="line">/* Student表按学号升序建唯一索引*/</span><br><span class="line">/* Course表按课程号升序建唯一索引*/</span><br><span class="line">/* SC表按学号升序和课程号降序建唯一索引*/</span><br><span class="line"></span><br><span class="line">create cluster index stusname on Student(Sname)；</span><br><span class="line">/* 在Student表的Sname（姓名）列上建立一个聚簇索引*/</span><br></pre></td></tr></table></figure>
+<h2 id="修改索引"><a href="#修改索引" class="headerlink" title="修改索引"></a>修改索引</h2><p><strong>语句：alter index &lt;旧索引名&gt; rename to &lt;新索引名&gt; ；</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/* 将SC表的Scno索引名改为SCSno*/</span><br><span class="line">alter index Scno rename to SCSno;</span><br></pre></td></tr></table></figure>
+<h2 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h2><p><strong>语句：drop index &lt;索引名&gt;；</strong><br>删除索引时，系统会从数据字典中删去有关该索引的描述。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/* 删除Student表的Stusname索引*/</span><br><span class="line">drop index stusname;</span><br></pre></td></tr></table></figure>
+<h2 id="数据查询"><a href="#数据查询" class="headerlink" title="数据查询"></a>数据查询</h2><p><strong>语句:select [all|distinct] &lt;目标列表达式&gt;[，&lt;目标列表达式&gt;] …from &lt;表名或视图名&gt;[， &lt;表名或视图名&gt; ] …</strong><br>[ where &lt;条件表达式&gt; ]<br>[ group by &lt;列名1&gt; [ having &lt;条件表达式&gt; ] ]<br>[ order by &lt;列名2&gt; [ asc|desc ] ]；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/* 查询全体学生的学号与姓名。*/</span><br><span class="line">select sno, sname</span><br><span class="line">from student;</span><br><span class="line">/* &lt;目标列表达式&gt;各个列的先后顺序可以与表中的顺序不一致*/</span><br><span class="line">/* 查询全体学生的姓名、学号、所在系。*/</span><br><span class="line">select sname, sno, sdept</span><br><span class="line">from student;</span><br><span class="line">/* 查询全体学生的详细记录。*/</span><br><span class="line">select sno, sname, ssex, sage, sdept</span><br><span class="line">from student;</span><br><span class="line">或</span><br><span class="line">select *</span><br><span class="line">from student;</span><br><span class="line">/* 查全体学生的姓名及其出生年份。*/</span><br><span class="line">select sname, 2004-sage /* 假定当年的年份为2004年*/</span><br><span class="line">from student;</span><br><span class="line">/* 查询全体学生的姓名、出生年份和系，要求用小写字母表示所有系名*/</span><br><span class="line">select sname, ‘year of birth: ‘, 2004-sage, islower(sdept)</span><br><span class="line">from student;</span><br><span class="line">/*使用列别名改变查询结果的列标题:*/</span><br><span class="line">select sname name, &#x27;year of birth: ’ BIRTH, 2004-sage BIRTHDAY, lower(sdept) DEPARTMENT</span><br><span class="line">from student;</span><br><span class="line">/* 查询选修了课程的学生学号。*/</span><br><span class="line">select sno from sc;</span><br><span class="line">等价于：</span><br><span class="line">select all sno from sc;</span><br><span class="line">/*指定DISTINCT关键词，去掉表中重复的行*/</span><br><span class="line">select distinct sno</span><br><span class="line">from sc;</span><br></pre></td></tr></table></figure>
+<h2 id="常用的查询条件与谓词"><a href="#常用的查询条件与谓词" class="headerlink" title="常用的查询条件与谓词"></a>常用的查询条件与谓词</h2><p>比较：&#x3D;，&gt;，&lt;，&gt;&#x3D;，&lt;&#x3D;，!&#x3D;，&lt;&gt;，!&gt;，!&lt;；NOT+上述比较运算符<br>确定范围：BETWEEN AND，NOT BETWEEN AND<br>确定集合：IN，NOT IN<br>字符匹配：LIKE，NOT LIKE<br>空值：IS NULL，IS NOT NULL<br>多重条件（逻辑运算）：AND，OR，NOT</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">/* 查询计算机科学系全体学生的名单。*/</span><br><span class="line">select sname</span><br><span class="line">from student</span><br><span class="line">where sdept=‘cs’;</span><br><span class="line">/* 查询所有年龄在20岁以下的学生姓名及其年龄。*/</span><br><span class="line">select sname, sage</span><br><span class="line">from student</span><br><span class="line">where sage &lt; 20;</span><br><span class="line">/* 查询考试成绩有不及格的学生的学号。*/</span><br><span class="line">select distinct sno</span><br><span class="line">from sc</span><br><span class="line">where grade&lt;60;</span><br><span class="line">/* 查询年龄在20~23岁（包括20岁和23岁）之间的学生的姓名、系别和年龄*/</span><br><span class="line">select sname, sdept, sage</span><br><span class="line">from student</span><br><span class="line">where sage between 20 and 23;</span><br><span class="line">/* 查询年龄不在20~23岁之间的学生姓名、系别和年龄*/</span><br><span class="line">select sname, sdept, sage</span><br><span class="line">from student</span><br><span class="line">where sage not between 20 and 23;</span><br><span class="line">/* 查询信息系（is）、数学系（ma）和计算机科学系（cs）学生的姓名和性别。*/</span><br><span class="line">select sname, ssex</span><br><span class="line">from student</span><br><span class="line">where sdept in ( &#x27;is&#x27;, &#x27;ma&#x27;, &#x27;cs&#x27; );</span><br><span class="line">/* 查询既不是信息系、数学系，也不是计算机科学系的学生的姓名和性别。*/</span><br><span class="line">select sname, ssex</span><br><span class="line">from student</span><br><span class="line">where sdept not in ( &#x27;is&#x27;, &#x27;ma&#x27;, &#x27;cs&#x27; );</span><br><span class="line">/* 查询学号为202215121的学生的详细情况。*/</span><br><span class="line">select *</span><br><span class="line">from student</span><br><span class="line">where sno like &#x27;202215121&#x27;;</span><br><span class="line">等价于：</span><br><span class="line">select *</span><br><span class="line">from student</span><br><span class="line">where sno = &#x27;202215121&#x27;;</span><br><span class="line">/* 查询所有姓刘学生的姓名、学号和性别。*/</span><br><span class="line">select sname, sno, ssex</span><br><span class="line">from student</span><br><span class="line">where sname like &#x27;刘%&#x27;;</span><br><span class="line">/* 查询姓&quot;欧阳&quot;且全名为三个汉字的学生的姓名。*/</span><br><span class="line">select sname</span><br><span class="line">from student</span><br><span class="line">where sname like &#x27;欧阳__’;</span><br><span class="line">/* 查询名字中第2个字为&quot;阳&quot;字的学生的姓名和学号。*/</span><br><span class="line">select sname, sno</span><br><span class="line">from student</span><br><span class="line">where sname like ‘__阳%’;</span><br><span class="line">/* 查询所有不姓刘的学生姓名。*/</span><br><span class="line">select sname, sno, ssex</span><br><span class="line">from student</span><br><span class="line">where sname not like ‘刘%’;</span><br><span class="line">/* 某些学生选修课程后没有参加考试，所以有选课记录，但没有考试成绩。查询缺少成绩的学生的学号和相应的课程号。*/</span><br><span class="line">select sno, cno</span><br><span class="line">from sc</span><br><span class="line">where grade is null;</span><br><span class="line">/* 查所有有成绩的学生学号和课程号。*/</span><br><span class="line">select sno, cno</span><br><span class="line">from sc</span><br><span class="line">where grade is not null;</span><br><span class="line">/* 查询计算机系年龄在20岁以下的学生姓名。*/</span><br><span class="line">select sname</span><br><span class="line">from student</span><br><span class="line">where sdept= &#x27;cs&#x27; and sage&lt;20;</span><br><span class="line">/* 查询信息系（IS）、数学系（MA）和计算机科学系（CS）学生的姓名和性别。*/</span><br><span class="line">select sname, ssex</span><br><span class="line">from student</span><br><span class="line">where sdept in ( &#x27;IS’, &#x27;MA’, &#x27;CS&#x27; );</span><br><span class="line">可改写为：</span><br><span class="line">select sname, ssex</span><br><span class="line">from student</span><br><span class="line">where Sdept= &#x27;IS&#x27; OR Sdept= &#x27;MA&#x27; OR Sdept= &#x27;CS&#x27;;</span><br></pre></td></tr></table></figure>
+<h3 id="ORDER-BY子句"><a href="#ORDER-BY子句" class="headerlink" title="ORDER BY子句"></a>ORDER BY子句</h3><p>可以按一个或多个属性列排序<br>升序：ASC；降序：DESC；缺省值为升序<br>当排序列含空值时<br>• ASC：排序列为空值的元组最后显示<br>• DESC：排序列为空值的元组最先显示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/* 查询选修了3号课程的学生的学号及其成绩，查询结果按分数降序排列。*/</span><br><span class="line">select sno, grade</span><br><span class="line">from sc</span><br><span class="line">where cno= &#x27; 3 &#x27;</span><br><span class="line">order by grade desc;</span><br><span class="line">/* 查询全体学生情况，查询结果按所在系的系号升序排列，同一系中的学生按年龄降序排列。*/</span><br><span class="line">select *</span><br><span class="line">from student</span><br><span class="line">order by sdept, sage desc;</span><br></pre></td></tr></table></figure>
+<h3 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h3><p><strong>计数 count</strong><br>count（[distinct|all] *）<br>count（[distinct|all] &lt;列名&gt;）<br><strong>计算总和 sum</strong><br>sum（[distinct|all] &lt;列名&gt;）<br><strong>计算平均值 avg</strong><br>avg（[distinct|all] &lt;列名&gt;）<br><strong>最大最小值 max &amp; min</strong><br>max（[distinct|all] &lt;列名&gt;）<br>min（[distinct|all] &lt;列名&gt;）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">/* 查询学生总人数。*/</span><br><span class="line">select count(*)</span><br><span class="line">from student;</span><br><span class="line">/* 查询选修了课程的学生人数。*/</span><br><span class="line">select count(distinct sno)</span><br><span class="line">from sc;</span><br><span class="line">/* 计算1号课程的学生平均成绩。*/</span><br><span class="line">select avg(grade)</span><br><span class="line">from sc</span><br><span class="line">where cno= &#x27;1&#x27;;</span><br><span class="line">/* 查询选修1号课程的学生最高分数。*/</span><br><span class="line">select max(grade)</span><br><span class="line">from sc</span><br><span class="line">where cno= &#x27;1&#x27;;</span><br><span class="line">/* 查询学生202215121选修课程的总学分数。*/</span><br><span class="line">select sum(credit)</span><br><span class="line">from sc, course</span><br><span class="line">where sno=&#x27;202215121&#x27; and sc.cno=course.cno;</span><br><span class="line">/* 求各个课程号及相应的选课人数。*/</span><br><span class="line">select cno, count(sno)</span><br><span class="line">from sc</span><br><span class="line">group by cno;</span><br><span class="line">/* 查询选修了3门（含）以上课程的学生学号。*/</span><br><span class="line">select sno</span><br><span class="line">from sc</span><br><span class="line">group by sno</span><br><span class="line">having count(*) &gt;=3;</span><br><span class="line">/*查询平均成绩大于等于86分的学生学号和平均成绩*/</span><br><span class="line">select sno, avg(grade)</span><br><span class="line">from sc</span><br><span class="line">group by sno</span><br><span class="line">having avg(grade)&gt;=86;</span><br><span class="line"></span><br><span class="line">/* 查询每个学生及其选修课程的情况*/</span><br><span class="line">select student.*, sc.*</span><br><span class="line">from student, sc</span><br><span class="line">where student.sno = sc.sno;</span><br><span class="line">/*可改写为*/</span><br><span class="line">select student.sno, sname, ssex, sage, sdept, cno, grade</span><br><span class="line">from student</span><br><span class="line">left outer join sc on (student.sno=sc.sno);</span><br><span class="line">/* 用自然连接完成。*/</span><br><span class="line">select student.sno, sname, ssex, sage, sdept, cno, grade</span><br><span class="line">from student, sc</span><br><span class="line">where student.sno = sc.sno;</span><br><span class="line"></span><br><span class="line">/* 查询选修2号课程且成绩在90分以上的所有学生的学号和姓名。*/</span><br><span class="line">select student.sno, sname</span><br><span class="line">from student, sc</span><br><span class="line">where student.sno=sc.sno and</span><br><span class="line">sc.cno=&#x27; 2 &#x27; and sc.grade&gt;90;</span><br><span class="line">/* 查询每一门课的间接先修课（即先修课的先修课）*/</span><br><span class="line">select first.cno, second.cpno</span><br><span class="line">from course first, course second</span><br><span class="line">where first.cpno = second.cno;</span><br><span class="line">/* 查询每个学生的学号、姓名、选修的课程名及成绩*/</span><br><span class="line">select student.sno, sname, cname,grade</span><br><span class="line">from student, sc, course /*多表连接*/</span><br><span class="line">where student.sno = sc.sno</span><br><span class="line">and sc.cno = course.cno;</span><br></pre></td></tr></table></figure>
+<h2 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a>嵌套查询</h2><pre><code>SELECT Sname/*外层查询/父查询*/
+FROM Student
+WHERE Sno IN
+（SELECT Sno/*内层查询/子查询*/
+FROM SC
+WHERE Cno= &#39; 2 &#39;）；
+
+/* 查询与“刘晨”在同一个系学习的学生。此查询要求可以分步来完成*/
+/* ① 确定“刘晨”所在系名*/
+select sdept
+from student
+where sname= ‘刘晨’;
+/*结果为： CS*/
+/*② 查找所有在CS系学习的学生。*/
+select sno, sname, sdept
+from student
+where sdept= &#39; cs’;
+/* 查询与“刘晨”在同一个系学习的学生。此查询要求可以分步来完成*/
+/*将第一步查询嵌入到第二步查询的条件中*/
+select sno, sname, sdept
+from student
+where sdept in
+(select sdept
+from student
+where sname= ‘ 刘晨’);
+/* 此查询为不相关子查询。*/
+/* 用自身连接完成查询要求*/
+select s1.sno, s1.sname, s1.sdept
+from student s1, student s2
+where s1.sdept = s2.sdept and
+s2.sname = &#39;刘晨‘;
+/*假设一个学生只可能在一个系学习，并且必须属于一个系，则可以用 = 代替IN ：*/
+SELECT Sno，Sname，Sdept
+FROM Student
+WHERE Sdept =
+(SELECT Sdept
+FROM Student
+WHERE Sname= ‘刘晨’);
+
+/*查询选修了课程名为“信息系统”的学生学号和姓名*/
+select sno, sname
+/*③ 最后在student关系中*/
+from student
+取出sno和sname
+where sno in
+(select sno
+/*② 然后在sc关系中找出选*/
+from sc
+/*修了3号课程的学生学号*/
+where cno in
+(select cno
+/*① 首先在course关系中找出*/
+from course
+/*“信息系统”的课程号，为3号*/
+where cname= ‘信息系统’
+)
+);
+/* 用连接查询实现*/
+select student.sno,sname
+from student, sc, course
+where student.sno = sc.sno and
+sc.cno = course.cno and
+course.cname=‘信息系统’;
+
+/* 找出每个学生超过他选修课程平均成绩的课程号。*/
+select sno, cno
+from sc x
+where grade &gt;=(select avg(grade)
+from sc y
+where y.sno=x.sno);
+/*从外层查询中取出SC的一个元组x，将元组x的Sno值（202215121）传送给内层查询。*/
+select avg(grade)
+from sc y
+where y.sno=&#39;202215121&#39;;
+/*执行内层查询，得到值88.33（近似值），用该值代替内层查询，得到外层查询：*/
+select sno, cno
+from sc x
+where grade &gt;=88.33；
+/*3. 执行这个查询，得到*/
+（202215121，1）
+/*4.外层查询取出下一个元组重复做上述1至3步骤，直到外层的SC元组全部处理完毕。结果为:*/
+（202215121，1）
+（202215122，2）
+/* 查询其他系中比计算机科学（CS）任一学生年龄小的学生姓名和年龄*/
+select sname, sage
+from student
+where sage &lt; any (select sage
+from student
+where sdept= &#39; cs &#39;)
+and sdept &lt;&gt; ‘cs &#39; ; /*父查询块中的条件 */
+/* 查询其他系中比计算机科学（CS）任一学生年龄小的学生姓名和年龄*/
+select sname, sage
+from student
+where sage &lt; any (select sage
+from student
+where sdept= &#39; cs &#39;)
+and sdept &lt;&gt; ‘cs &#39; ; /*父查询块中的条件 */
+/* 用聚集函数实现*/
+select sname, sage
+from student
+where sage &lt;
+(select max(sage)
+from student
+where sdept= &#39;cs&#39;)
+and sdept &lt;&gt; &#39;cs&#39;;
+/* 查询其他系中比计算机科学系所有学生年龄都小的学生姓名及年龄。*/
+/* 方法一：用ALL谓词*/
+select sname, sage
+from student
+where sage &lt; all
+(select sage
+from student
+where sdept= &#39; cs &#39;)
+and sdept &lt;&gt; &#39; cs ’;
+/* 方法二：用聚集函数*/
+select sname, sage
+from student
+where sage &lt;
+(select min(sage)
+from student
+where sdept= &#39; cs &#39;)
+and sdept &lt;&gt;&#39; cs ’;
+/*查询所有选修了1号课程的学生姓名。*/
+/*用嵌套查询*/
+select sname
+from student
+where exists
+(select *
+from sc
+where sno=student.sno and cno= &#39; 1 &#39;);
+• 用连接运算
+select sname
+from student, sc
+where student.sno=sc.sno and sc.cno= &#39;1&#39;;
+[例3.61] 查询没有选修1号课程的学生姓名。
+select sname
+from student
+where not exists
+(select *
+from sc
+where sno = student.sno and cno=&#39;1&#39;);
+[例3.55]查询与“刘晨”在同一个系学习的学生。带有IN的谓词可以用带EXISTS
+谓词的子查询替换：
+select sno,sname,sdept
+from student s1
+where exists
+(select * from student s2
+where s2.sdept = s1.sdept and
+s2.sname =&#39;刘晨&#39;);
+[例3.62] 查询选修了全部课程的学生姓名。
+• 没有一门课程是他不选修的
+select sname from student
+where not exists
+(select * from course
+where not exists
+(select * from sc
+where sno= student.sno
+and cno= course.cno
+)
+);
+[例3.63]查询至少选修了学生202215122选修的全部课程的学生号码。
+用NOT EXISTS谓词表示：
+select distinct sno
+from sc scx
+where not exists
+(select *
+from sc scy
+where scy.sno = &#39; 202215122 &#39; and
+not exists
+(select *
+from sc scz
+where scz.sno=scx.sno and
+scz.cno=scy.cno));
+[例3.64] 查询计算机科学系的学生及年龄不大于19岁的学生。
+•
+方法一：
+select *
+from student
+where sdept= ‘CS&#39;
+union
+select *
+from student
+where sage&lt;=19;
+方法二：
+select distinct *
+from student
+where sdept= ‘CS&#39; or sage&lt;=19;
+[例3.65] 查询选修了课程1或者选修了课程2的学生。
+select sno
+from sc
+where cno=&#39; 1 &#39;
+union
+select sno
+from sc
+where cno= &#39; 2 &#39;；
+[例3.66] 查询计算机科学系的学生与年龄不大于19岁的学生的交集
+select *
+from student
+where sdept=&#39;cs&#39;
+intersect
+select *
+from student
+where sage&lt;=19;
+实际上就是查询计算机科学系中年龄不大于19岁的学生
+select *
+from student
+where sdept= &#39;cs&#39; and sage&lt;=19;
+[例3.67] 查询选修课程1的学生集合与选修课程2的学生集合的交集
+select sno
+from sc
+where cno=&#39; 1 &#39;
+intersect
+select sno
+from sc
+where cno=&#39;2 ‘;
+•
+实际上是查询既选修了课程1又选修了课程2的学生
+select sno
+from sc
+where cno=&#39; 1 &#39; and sno in
+(select sno
+from sc
+where cno=&#39; 2 &#39;);
+[例3.68] 查询计算机科学系的学生与年龄不大于19岁的学生的差集。
+select *
+from student
+where sdept=&#39;cs&#39;
+except
+select *
+from student
+where sage &lt;=19;
+•
+实际上是查询计算机科学系中年龄大于19岁的学生
+select *
+from student
+where sdept= &#39;cs&#39; and sage&gt;19;
+[例3.57]找出每个学生超过他自己选修课程平均成绩的课程号
+select sno, cno
+from sc, (select sno, avg(grade)
+from sc
+group by sno)
+as avg_sc(avg_sno, avg_grade)
+where sc.sno = avg_sc.avg_sno
+and sc.grade &gt;=avg_sc.avg_grade;
+[例3.60]查询所有选修了1号课程的学生姓名，可以用如下查询完成：
+select sname
+from student,
+(select sno from sc where cno=&#39; 1 &#39;) as sc1
+where student.sno=sc1.sno;
+insert
+into &lt;表名&gt; [(&lt;属性列1&gt;[，&lt;属性列2 &gt;…)]
+values (&lt;常量1&gt; [，&lt;常量2&gt;] … )
+[例3.69] 将一个新学生元组（学号：202215128；姓名：陈冬；性别：男；所在
+系：IS；年龄：18岁）插入到Student表中。
+insert
+into student (sno,sname,ssex,sdept,sage)
+values (&#39;202215128&#39;,&#39;陈冬&#39;,&#39;男&#39;,&#39;IS&#39;,18);
+
+[例3.70] 将学生张成民的信息插入到Student表中。
+insert
+into student
+values (&#39;202215126&#39;,&#39;张成民&#39;, &#39;男&#39;,18,&#39;CS&#39;);
+[例3.71] 插入一条选课记录( &#39;202215128&#39;，&#39;1 &#39;)。
+insert
+into sc(sno,cno)
+values (&#39;202215128&#39;,&#39;1&#39;);
+或者：
+insert
+into sc
+values (&#39;202215128&#39;,&#39;1&#39;,null);
+语句格式
+insert
+into &lt;表名&gt; [(&lt;属性列1&gt; [，&lt;属性列2&gt;… )]
+子查询；
+[例3.72] 对每一个系，求学生的平均年龄，并把结果存入数据库。
+•
+第一步：建表
+create table dept_age
+(sdept char(15),
+/* 系名*/
+avg_age smallint);
+/*学生平均年龄*/
+•
+第二步：插入数据
+insert
+into dept_age(sdept,avg_age)
+select sdept,avg(sage)
+from student
+group by sdept;
+语句格式
+update &lt;表名&gt;
+set &lt;列名&gt;=&lt;表达式&gt;[，&lt;列名&gt;=&lt;表达式&gt;]…
+[where &lt;条件&gt;]
+1. 修改某一个元组的值
+
+[例3.73] 将学生202215121的年龄改为22岁
+update student
+set sage=22
+where sno=‘202215121’;
+ 2. 修改多个元组的值
+
+[例3.74] 将所有学生的年龄增加1岁
+update student
+set sage= sage+1;
+ 3. 带子查询的修改语句
+
+[例3.75] 将计算机科学系全体学生的成绩置零。
+update sc
+set grade=0
+where sno in
+(select sno from student
+where sdept = &#39;CS&#39;);
+语句格式
+delete
+from &lt;表名&gt;
+[where &lt;条件&gt;]；
+1. 删除某一个元组的值
+
+[例3.76] 删除学号为202215128的学生记录。
+delete
+from student
+where sno= 202215128 &#39;；
+ 2. 删除多个元组的值
+
+[例3.77] 删除所有的学生选课记录。
+delete
+from sc；
+ 3. 带子查询的删除语句
+
+[例3.78] 删除计算机科学系所有学生的选课记录。
+delete
+from sc
+where sno in
+(select sno from student
+where sdept = &#39;CS&#39;);
+[例 3.79] 向SC表中插入一个元组，学生号是”202215126”，课程号是”1”，成
+绩为空。
+insert into sc(sno,cno,grade)
+values(&#39;202215126 &#39;,&#39;1&#39;,null); /*该学生还没有考试成绩，取空值*/
+或
+insert into sc(sno,cno)
+values(&#39; 202215126 &#39;,&#39;1&#39;); /*没有赋值的属性，其值为空值*/
+
+[例3.80] 将Student表中学生号为“202215200”的学生所属的系改为空值。
+update student
+set sdept = null
+where sno=&#39;202215200&#39;;
+[例 3.81] 从Student表中找出漏填了数据的学生信息
+select *
+from student
+where sname is null or ssex is null or sage
+is null or sdept is null;
+[例3.82] 找出选修1号课程的不及格的学生。
+select sno
+from sc
+where grade &lt; 60 and cno=&#39;1&#39;;
+• 查询结果不包括缺考的学生，因为他们的Grade值为 null。
+
+[例 3.83] 选出选修1号课程的不及格的学生以及缺考的学生。
+select sno
+from sc
+where grade &lt; 60 and cno=&#39;1&#39;
+union
+select sno
+from sc
+where grade is null and cno=&#39;1&#39;
+• 或者
+select sno
+from sc
+where cno=&#39;1&#39; and (grade&lt;60 or grade is null);
+建立视图
+
+语句格式
+create view &lt;视图名&gt; [(&lt;列名&gt; [，&lt;列名&gt;]…)]
+as &lt;子查询&gt;
+[with check option]；
+[例3.84] 建立信息系学生的视图。
+create view is_student
+as
+select sno,sname,sage
+from student
+where sdept= &#39;is’;
+
+[例3.85] 建立信息系学生的视图，并要求进行修改和插入操作时仍需保证该视图
+只有信息系的学生 。
+create view is_student
+as
+select sno,sname,sage
+from student
+where sdept= &#39;is&#39;
+with check option;
+基于多个基表的视图
+
+[例3.86] 建立信息系选修了1号课程的学生视图。
+create view is_s1(sno,sname,grade)
+as
+select student.sno,sname,grade
+from student,sc
+where sdept= &#39;is&#39; and
+student.sno=sc.sno and
+sc.cno= &#39;1&#39;;
+
+基于视图的视图
+
+[例3.87] 建立信息系选修了1号课程且成绩在90分以上的学生的视图。
+create view is_s2
+as
+select sno,sname,grade
+from is_s1
+where grade&gt;=90;
+带表达式的视图
+
+[例3.88] 定义一个反映学生出生年份的视图。
+create view bt_s(sno,sname,sbirth)
+as
+select sno,sname,2023-sage
+from student;
+
+分组视图
+
+[例3.89] 将学生的学号及他的平均成绩定义为一个视图
+create view s_g(sno,gavg)
+as
+select sno,avg(grade)
+from sc
+group by sno;
+不指定属性列
+
+[例3.90]将Student表中所有女生记录定义为一个视图
+create view f_student(f_sno，name，sex，age，dept)
+as
+select *
+from student
+where ssex=‘女’；
+删除视图
+
+语句格式
+drop view &lt;视图名&gt;；
+［例3.91］
+•
+删除视图BT_S：
+drop view bt_s；
+•
+删除视图is_s1：
+drop view is_s1；
+•
+拒绝执行
+•
+级联删除：
+drop view is_s1 cascade;
+[例3.92] 在信息系学生的视图中找出年龄小于20岁的学生。
+select sno，sage
+from is_student
+where sage&lt;20；
+•
+is_student视图的定义 (参见视图定义例3.85)
+•
+视图消解转换后的查询语句为：
+select sno，sage
+from student
+where sdept= &#39;is&#39; and sage&lt;20；
+
+[例3.93] 查询选修了1号课程的信息系学生
+•
+查询了虚表和基本表
+select is_student.sno,sname
+from is_student,sc
+where is_student.sno =sc.sno and sc.cno= &#39;1&#39;;
+[例3.95] 将信息系学生视图IS_Student中学号202215122的学生姓名改为“刘辰”。
+update is_student
+set sname= &#39;刘辰&#39;
+where sno= ‘ 202215122 &#39;；
+•
+转换后的语句：
+update student
+set sname= &#39;刘辰&#39;
+where sno= ‘ 202215122 &#39; and sdept= &#39;is&#39;；
+
+[例3.96] 向视图IS_Student中插入一个新的学生记录：202215129，赵新，20岁
+insert
+into is_student
+values(‘202215129&#39;,&#39;赵新&#39;,20);
+•
+转换为对基本表的更新：
+insert
+into student(sno，sname，sage，sdept)
+values(‘202215129 &#39;，&#39;赵新&#39;，20，&#39;is&#39; )；
+[例3.97]删除信息系学生视图IS_Student中学号为202215129的记录
+delete
+from is_student
+where sno= ‘ 202215129 &#39;；
+•
+转换为对基本表的更新：
+delete
+from student
+where sno= ‘ 202215129 &#39; and sdept= &#39;is&#39;；
+例：视图S_G为不可更新视图。
+update s_g
+set gavg=90
+where sno= ‘202215121’；
+•
+这个对视图的更新无法转换成对基本表SC的更新
+</code></pre>
+
+	</div>
+</article>
+
+
+
+    </div>
+  </div>
+  <div class="row">
+<div id="bottom" class="col-md-12"> 
+  <div class="bottom-nav">
+	
+	
+	<a href="https://github.com/lizehongss" class="fa fa-github fa-2x" target="_blank" title="Follow me" ></a>
+	
+	
+</div>
+<div class="bottom-info">
+	&copy; 2025 Liangyu Chen<br>
+	Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	theme <a href="https://github.com/lizehongss/hexo-theme-zhl" target="_blank">zhl</a>
+</div>
+</div>
+</div>
+</div>
+<div id="tool">
+  <ul>
+    <li class="fa fa-angle-up top" id="top"></li>
+  </ul>
+</div>
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+  
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/zhl.js"></script>
+  
+    <script src="/js/bj.js"></script>
+  
+
+<!-- jQ cdn  -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- bootstrap js cdn-->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+
+
+</body>
+</html>
