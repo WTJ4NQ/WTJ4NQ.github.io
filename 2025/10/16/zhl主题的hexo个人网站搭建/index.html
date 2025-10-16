@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,inital-scale=1,user-scalable=no">
+  <title>zhl主题的hexo个人网站搭建 [ cly ]</title>
+  <!-- bootstrapcss文件 -->
+ <!--  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<!--   
+<link rel="stylesheet" href="/css/zhl.css">
+
+ -->
+  
+    <!-- stylesheets list from config.yml -->
+    
+      <link rel="stylesheet" href="/css/fork-awesome.min.css">
+    
+      <link rel="stylesheet" href="/css/zhl.css">
+    
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+  <div id="wrap" class="col-md-12">
+    <div id="header">
+	<div id="header-left">
+	<h1 id="header-title"> 
+	<a href="/">
+		cly
+	</a>
+	</h1>
+	
+	</div>
+	<div id="header-right">
+		
+		
+		<a href="/"  title="home"><i class="fa fa-home ">home</i></a>
+		
+		<a target="_blank" rel="noopener" href="https://github.com/lizehongss/demo_show"  title="demo"><i class="fa fa-code ">demo</i></a>
+		
+		<a href="/about"  title="about"><i class="fa fa-user ">about</i></a>
+		
+		<a href="/"  title="music"><i class="fa fa-music ">music</i></a>
+		
+		
+	</div>
+</div>
+
+  </div>
+  </div>
+  <div id="content" class="row">
+    <div id="content-left" class="col-md-4">
+      
+
+	
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-tags">标签</h3>
+		<div class="widget tags">
+		<a class="tag-span-link" href="/tags/SQL/" rel="tag">SQL<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-crypto/" rel="tag">ctf crypto<span class="tag-span-count">2</span></a> <a class="tag-span-link" href="/tags/ctf-pwn/" rel="tag">ctf pwn<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/ctf-web/" rel="tag">ctf web<span class="tag-span-count">1</span></a> <a class="tag-span-link" href="/tags/website/" rel="tag">website<span class="tag-span-count">1</span></a>
+		</div>
+	</div>
+
+
+	
+	<div class="widget-wrap">
+		<h3 class="widget-title fa fa-archive">归档</h3>
+		<div class="widget">
+			<ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">5</span></li></ul>
+		</div>
+	</div>
+
+
+
+    </div>
+    <div id="content-right" class="col-md-8">
+    
+<article id="post">
+	<div class="post-title">
+  <h1>zhl主题的hexo个人网站搭建</h1>
+  	</div>
+  <div class="page-meta">
+  	<span class="fa-wrap">
+  		<i class="fa fa-clock-o"></i>
+  		<span class="date-meta">2025-10-16</span>
+  	</span>
+  	<span class="fa-wrap">
+  		
+  		<i class="fa fa-tags"></i>
+  		<span class="tags-meta">website</span>
+  		
+  	</span>
+  	<span class="fa-wrap">
+  		
+  	</span>
+  </div>
+  <div class="post-content">
+  <h2 id="zhl主题的hexo个人网站搭建"><a href="#zhl主题的hexo个人网站搭建" class="headerlink" title="zhl主题的hexo个人网站搭建"></a>zhl主题的hexo个人网站搭建</h2><p>这算是第二次搭建个人网站了，主要是前一次的默认主题不太满意。这次搭建的大部分基础环境应该是具备的，所以并不算是从零开始搭建。</p>
+<h3 id="搭建流程"><a href="#搭建流程" class="headerlink" title="搭建流程"></a>搭建流程</h3><p>使用管理员身份运行<code>git-bash</code>，进入到需要安装的目录，然后按照hexo的readme里面的要求，执行<code>npm install hexo-cli -g</code>，<code>npm install hexo --save</code>，就能设置好环境。</p>
+<p><code>hexo init test</code>可以在当前目录下再次创建一个叫<code>test</code>的目录，其中会安装<code>hexo</code>运行需要的所有内容。</p>
+<p>从<a target="_blank" rel="noopener" href="https://github.com/lizehongss/hexo-theme-zhl%E4%B8%8A%E9%9D%A2%E4%B8%8B%E8%BD%BD%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E7%84%B6%E5%90%8E%E6%8A%8A%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%87%BA%E6%9D%A5%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E6%94%BE%E5%88%B0%60test%60%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%60theme%60%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%8C%E5%B9%B6%E4%BF%AE%E6%94%B9%E5%90%8D%E7%A7%B0%E4%B8%BA%60zhl%60%EF%BC%8C%E5%86%8D%E8%BF%90%E8%A1%8C%60hexo">https://github.com/lizehongss/hexo-theme-zhl上面下载压缩包，然后把解压缩出来的文件夹放到`test`目录中的`theme`文件夹中，并修改名称为`zhl`，再运行`hexo</a> s&#96;启动服务器，即可在localhost:4000上面看到网页的内容了。</p>
+<h3 id="hexo-deploy配置"><a href="#hexo-deploy配置" class="headerlink" title="hexo deploy配置"></a><code>hexo deploy</code>配置</h3><p><code>hexo deploy</code>可以把本地的文件上传到github上面，但是需要进行一定的配置才能使用，主要需要配置ssh的密钥。</p>
+<p>首先在windows本地配置ssh密钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ls -al ~/.ssh</span><br><span class="line">ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;</span><br><span class="line">eval &quot;$(ssh-agent -s)&quot;</span><br><span class="line">ssh-add ~/.ssh/id_ed25519</span><br><span class="line">cat ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+
+<p>此时，能够看到cat命令显示出来的密钥的具体信息，复制下来。然后登录github，点击个人头像，选择settings，然后在SSH and GPG keys选项处点击new SSH key，title随便写，key type默认，key上面黏贴复制的密钥的内容，然后点击add SSH key，即可配置成功。</p>
+<p>在执行前，还需要在目录下安装git工具：<code>npm install hexo-deployer-git --save</code></p>
+<h3 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h3><p>创建全新的文章：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo new draft a	草稿，在./source/drafts里面</span><br><span class="line">hexo new a	正式稿，在./source/posts里面</span><br><span class="line">hexo publish a	把草稿变成正式稿</span><br></pre></td></tr></table></figure>
+
+<p>然后在生成的对应markdown文件里面修改，就能写出文章了。</p>
+<p>复制已有的文章：</p>
+<p>直接把markdown文件复制到.&#x2F;source&#x2F;posts中，然后在markdown最开始的三行增加类似下面的内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: pwn</span><br><span class="line">date: 2024-09-22 12:25:58</span><br><span class="line">tags: ctf pwn</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+	</div>
+</article>
+
+
+
+    </div>
+  </div>
+  <div class="row">
+<div id="bottom" class="col-md-12"> 
+  <div class="bottom-nav">
+	
+	
+	<a href="https://github.com/lizehongss" class="fa fa-github fa-2x" target="_blank" title="Follow me" ></a>
+	
+	
+</div>
+<div class="bottom-info">
+	&copy; 2025 Liangyu Chen<br>
+	Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+	theme <a href="https://github.com/lizehongss/hexo-theme-zhl" target="_blank">zhl</a>
+</div>
+</div>
+</div>
+</div>
+<div id="tool">
+  <ul>
+    <li class="fa fa-angle-up top" id="top"></li>
+  </ul>
+</div>
+  <div class="bg_content">
+    <canvas id="canvas"></canvas>
+  </div>
+  
+  <!-- scripts list from theme config.yml -->
+  
+    <script src="/js/zhl.js"></script>
+  
+    <script src="/js/bj.js"></script>
+  
+
+<!-- jQ cdn  -->
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- bootstrap js cdn-->
+<!-- <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+
+
+</body>
+</html>
